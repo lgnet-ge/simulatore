@@ -120,9 +120,23 @@
       line-height: 1.3;
     }
 
-    /* Campi input */
-    .input-group {
+    /* Campi input con etichetta fuori */
+    .field-group {
       margin-bottom: 1.5rem;
+    }
+
+    .field-label {
+      display: block;
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: #1f2937;
+      margin-bottom: 0.5rem;
+    }
+
+    .field-label small {
+      font-weight: 400;
+      font-size: 0.75rem;
+      color: #6b7280;
     }
 
     .input-large {
@@ -134,7 +148,7 @@
       border: 2px solid #e5e7eb;
       border-radius: 20px;
       background: white;
-      text-align: center;
+      text-align: left;
       color: #1f2937;
     }
 
@@ -145,10 +159,9 @@
     }
 
     .input-suffix {
-      text-align: center;
-      font-size: 0.85rem;
-      color: #6b7280;
       margin-top: 0.5rem;
+      font-size: 0.8rem;
+      color: #6b7280;
     }
 
     /* Griglia opzioni */
@@ -275,7 +288,7 @@
       background: #dbeafe;
       padding: 0.3rem 0.9rem;
       border-radius: 40px;
-      font-size: 0.7rem;
+      font-size: 0.75rem;
       font-weight: 600;
       color: #1e3a8a;
       margin-bottom: 1rem;
@@ -286,7 +299,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-top: 0.5rem;
+      margin-top: 1rem;
     }
 
     .btn-back {
@@ -927,7 +940,7 @@ function App() {
             <div className="hero-icon-box">📍</div>
           </div>
           <div className="question-title">Dove si trova l'immobile?</div>
-          <div className="input-group">
+          <div className="field-group">
             <input className="input-large" type="text" placeholder="es. Via Roma 15, Genova" value={addr} onChange={e => setAddr(e.target.value)} onKeyDown={e => e.key === "Enter" && cerca()} />
           </div>
           <button className="btn-calc" onClick={cerca} disabled={loading || !addr.trim()} style={{ marginBottom: "1rem" }}>{loading ? "⏳ Ricerca..." : "🔍 Cerca indirizzo"}</button>
@@ -968,9 +981,9 @@ function App() {
             <div className="hero-icon-box">📐</div>
           </div>
           <div className="question-title">Qual è la superficie utile?</div>
-          <div className="input-group">
+          <div className="field-group">
+            <label className="field-label">Superficie utile <small>(metri quadrati)</small></label>
             <input className="input-large" type="number" min="0" placeholder="es. 75" value={mq} onChange={e => setMq(e.target.value)} />
-            <div className="input-suffix">metri quadrati (mq)</div>
           </div>
           <div className="question-title" style={{ fontSize: "1.2rem", marginTop: "1rem", marginBottom: "1rem" }}>Stato conservativo</div>
           <div className="options-grid">
@@ -999,7 +1012,7 @@ function App() {
         </div>
       )}
 
-      {/* Step 3 - Dati economici */}
+      {/* Step 3 - Dati economici - CON ETICHETTE FUORI */}
       {step === 3 && (
         <div className="card">
           <div className="hero-icon">
@@ -1007,26 +1020,37 @@ function App() {
           </div>
           <div className="question-title" style={{ fontSize: "1.2rem" }}>Dati economici</div>
           <div className="badge">📍 Zona {zona} · {mq} mq · {STATO_LABELS[stato].label}</div>
-          <div className="input-group">
-            <input className="input-large" type="number" placeholder="Rendita catastale (€/anno)" value={form.r} onChange={e => fa("r", e.target.value)} />
-            <div className="input-suffix">opzionale - dalla visura catastale</div>
+          
+          <div className="field-group">
+            <label className="field-label">Rendita catastale <small>(€/anno) - opzionale</small></label>
+            <input className="input-large" type="number" placeholder="es. 850" value={form.r} onChange={e => fa("r", e.target.value)} />
+            <div className="input-suffix">📋 La trovi nella visura catastale. Serve per il calcolo preciso dell'IMU.</div>
           </div>
-          <div className="input-group">
-            <input className="input-large" type="number" placeholder="Valore di mercato (€)" value={form.vi} onChange={e => fa("vi", e.target.value)} />
-            <div className="input-suffix">stimato OMI - modificabile</div>
+          
+          <div className="field-group">
+            <label className="field-label">Valore di mercato <small>(€)</small></label>
+            <input className="input-large" type="number" placeholder="es. 180.000" value={form.vi} onChange={e => fa("vi", e.target.value)} />
+            <div className="input-suffix">💰 Stimato dalle tabelle OMI. Modificalo se conosci il valore reale.</div>
           </div>
-          <div className="input-group">
-            <input className="input-large" type="number" placeholder="Canone desiderato (€/mese)" value={form.cm} onChange={e => fa("cm", e.target.value)} />
-            <div className="input-suffix">per lo scenario libero mercato</div>
+          
+          <div className="field-group">
+            <label className="field-label">Canone mensile desiderato <small>(€/mese)</small></label>
+            <input className="input-large" type="number" placeholder="es. 750" value={form.cm} onChange={e => fa("cm", e.target.value)} />
+            <div className="input-suffix">🏠 Usato per lo scenario "libero mercato".</div>
           </div>
-          <div className="input-group">
-            <input className="input-large" type="number" placeholder="Spese condominiali (€/mese)" value={form.co} onChange={e => fa("co", e.target.value)} />
-            <div className="input-suffix">opzionale - stima 50€/mese</div>
+          
+          <div className="field-group">
+            <label className="field-label">Spese condominiali <small>(€/mese) - opzionale</small></label>
+            <input className="input-large" type="number" placeholder="es. 50" value={form.co} onChange={e => fa("co", e.target.value)} />
+            <div className="input-suffix">🏢 Lascia vuoto per usare la stima automatica (50€/mese).</div>
           </div>
-          <div className="input-group">
-            <input className="input-large" type="number" placeholder="Manutenzione annua (€/anno)" value={form.mn} onChange={e => fa("mn", e.target.value)} />
-            <div className="input-suffix">opzionale - stima 0.5% del valore</div>
+          
+          <div className="field-group">
+            <label className="field-label">Manutenzione ordinaria <small>(€/anno) - opzionale</small></label>
+            <input className="input-large" type="number" placeholder="es. 500" value={form.mn} onChange={e => fa("mn", e.target.value)} />
+            <div className="input-suffix">🔧 Lascia vuoto per la stima automatica (0.5% del valore).</div>
           </div>
+          
           {s3err && <div className="error-message">⚠️ {s3err}</div>}
           <div className="nav-buttons">
             <button className="btn-back" onClick={() => setStep(2)}>← Indietro</button>
@@ -1080,7 +1104,7 @@ function App() {
             <div className="hero-icon-box">📋</div>
           </div>
           <div className="question-title" style={{ fontSize: "1.2rem" }}>Maggiorazioni</div>
-          <div style={{ fontWeight: 700, marginBottom: "0.5rem", fontSize: "0.85rem", color: "#4b5563" }}>Arredo</div>
+          <label className="field-label">Arredo</label>
           <div className="options-grid">
             {[{ v: "no", label: "Non arredato", icon: "🚫", perc: "+0%" }, { v: "parziale", label: "Parzialmente arredato", icon: "🛋️", perc: "+6%" }, { v: "completo", label: "Completamente arredato", icon: "🏠", perc: "+12%" }].map(o => (
               <div key={o.v} className={`option-card ${maggArredo === o.v ? "selected" : ""}`} onClick={() => setMaggArredo(o.v)}>
@@ -1090,7 +1114,7 @@ function App() {
               </div>
             ))}
           </div>
-          <div style={{ fontWeight: 700, marginBottom: "0.5rem", marginTop: "1rem", fontSize: "0.85rem", color: "#4b5563" }}>Durata contratto concordato</div>
+          <label className="field-label" style={{ marginTop: "1rem" }}>Durata contratto concordato</label>
           <div className="options-grid">
             {[{ v: "3", label: "3+2 anni", perc: "+0%" }, { v: "4", label: "4+2 anni", perc: "+2%" }, { v: "5", label: "5+2 anni", perc: "+4%" }, { v: "6", label: "6+2 anni", perc: "+6%" }].map(o => (
               <div key={o.v} className={`option-card ${maggDurata === o.v ? "selected" : ""}`} onClick={() => setMaggDurata(o.v)}>
