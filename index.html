@@ -736,7 +736,7 @@ function omiSuggerimenti(zona, mq, stato) {
   if (stato === "ottimo") { aqUnit = ov.aq_min + (ov.aq_max - ov.aq_min) * 0.5; lcUnit = ov.lc_min + (ov.lc_max - ov.lc_min) * 0.5; }
   else if (stato === "normale") { aqUnit = ov.aq_min + (ov.aq_max - ov.aq_min) * 0.25; lcUnit = ov.lc_min + (ov.lc_max - ov.lc_min) * 0.25; }
   else { aqUnit = ov.aq_min; lcUnit = ov.lc_min; }
-  return { vi: Math.round(aqUnit * mq), cm: Math.round(lcUnit * mq / 12), aqUnit: Math.round(aqUnit), lcUnit: lcUnit.toFixed(1) };
+  return { vi: Math.round(aqUnit * mq), cm: Math.round(lcUnit * mq), aqUnit: Math.round(aqUnit), lcUnit: lcUnit.toFixed(1) };
 }
 
 async function geocode(address) {
