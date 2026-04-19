@@ -23,7 +23,7 @@
     }
 
     .app {
-      max-width: 680px;
+      max-width: 720px;
       margin: 0 auto;
       padding: 1.5rem 1rem 3rem;
     }
@@ -34,9 +34,10 @@
       border-radius: 32px;
       box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
       padding: 2rem 1.75rem;
+      margin-bottom: 1rem;
     }
 
-    /* Step indicator */
+    /* Step indicator (wizard) */
     .steps {
       display: flex;
       justify-content: space-between;
@@ -80,7 +81,6 @@
       font-size: 0.7rem;
       font-weight: 600;
       color: #6b7280;
-      letter-spacing: 0.3px;
       text-transform: uppercase;
     }
 
@@ -122,7 +122,7 @@
 
     /* Campi input */
     .input-group {
-      margin-bottom: 1.75rem;
+      margin-bottom: 1.5rem;
     }
 
     .input-large {
@@ -151,11 +151,11 @@
       margin-top: 0.5rem;
     }
 
-    /* Griglia opzioni (stato, arredo, durata) */
+    /* Griglia opzioni */
     .options-grid {
       display: flex;
       gap: 0.75rem;
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
       flex-wrap: wrap;
     }
 
@@ -231,10 +231,6 @@
       background: #dbeafe;
     }
 
-    .feature-pill .emoji {
-      font-size: 1.1rem;
-    }
-
     /* Box informativo */
     .info-box {
       background: #fef3c7;
@@ -261,10 +257,6 @@
       margin-bottom: 0.5rem;
     }
 
-    .info-title-blue {
-      color: #1e3a8a;
-    }
-
     .info-content {
       font-size: 0.9rem;
       color: #1f2937;
@@ -289,7 +281,7 @@
       margin-bottom: 1rem;
     }
 
-    /* Bottoni navigazione */
+    /* Bottoni */
     .nav-buttons {
       display: flex;
       justify-content: space-between;
@@ -337,7 +329,6 @@
     .btn-next:disabled {
       background: #9ca3af;
       cursor: not-allowed;
-      transform: none;
     }
 
     .btn-calc {
@@ -358,7 +349,6 @@
       transform: translateY(-1px);
     }
 
-    /* Separatore */
     .separator {
       height: 1px;
       background: linear-gradient(90deg, transparent, #e5e7eb, transparent);
@@ -466,7 +456,7 @@
       vertical-align: middle;
     }
 
-    /* Pulsanti risultati */
+    /* Pulsanti azioni */
     .action-buttons {
       display: flex;
       gap: 1rem;
@@ -533,7 +523,7 @@
       color: white;
     }
 
-    /* Messaggi errore/successo */
+    /* Messaggi */
     .error-message {
       background: #fee2e2;
       border-radius: 16px;
@@ -551,7 +541,7 @@
       font-size: 0.9rem;
     }
 
-    /* Note finali */
+    /* Note */
     .notes {
       background: #f9fafb;
       border-radius: 20px;
@@ -600,7 +590,6 @@
       .btn-back, .btn-next {
         width: 100%;
         text-align: center;
-        justify-content: center;
       }
     }
 
@@ -728,7 +717,7 @@ function canoneConFascia(zd, mq, sottofascia, maggArredo, maggDurata) {
 }
 
 function omiSuggerimenti(zona, mq, stato) {
-  const ov = window.OMI_VALORI?.[zona];
+  const ov = OMI_VALORI[zona];
   if (!ov || !mq) return null;
   let aqUnit, lcUnit;
   if (stato === "ottimo") { aqUnit = ov.aq_min + (ov.aq_max - ov.aq_min) * 0.5; lcUnit = ov.lc_min + (ov.lc_max - ov.lc_min) * 0.5; }
@@ -834,7 +823,7 @@ function App() {
       const res = await geocode(addr);
       setGeoResult(res);
       const lon = parseFloat(res.lon), lat = parseFloat(res.lat);
-      const hit = await window.trovaZonaGeoAsync(lon, lat);
+      const hit = await trovaZonaGeoAsync(lon, lat);
       setZona(hit ? hit.zona : null);
     } catch (e) {
       setGeoErr(e.message || "Indirizzo non trovato.");
@@ -948,7 +937,7 @@ function App() {
             <div className="info-box">
               <div className="info-title">✅ Zona rilevata</div>
               <div className="info-content">
-                <strong>{zona}</strong> - {window.OMI_DESC?.[zona] || "Zona OMI"}<br/>
+                <strong>{zona}</strong> - {OMI_DESC[zona] || "Zona OMI"}<br/>
                 Fascia canone: {fEur(ZT[zona]?.min)}/mq/anno – {fEur(ZT[zona]?.max)}/mq/anno
               </div>
             </div>
