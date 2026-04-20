@@ -7,240 +7,243 @@
   <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
   <style>
-
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    *{margin:0;padding:0;box-sizing:border-box}
     :root{
-      --navy:#1d4ed8;--navy2:#1e40af;
-      --brass:#f59e0b;--brass-light:#fbbf24;--brass-pale:#fef3c7;
-      --bg:#f3f4f6;--bg2:#e5e7eb;--white:#ffffff;
-      --text:#111827;--muted:#6b7280;--muted2:#9ca3af;
-      --green:#059669;--green-bg:#d1fae5;
-      --red:#dc2626;--red-bg:#fee2e2;
-      --border:#e5e7eb;--border2:#d1d5db;
-      --shadow:0 1px 3px rgba(0,0,0,.06),0 4px 12px rgba(0,0,0,.04);
-      --shadow-md:0 4px 16px rgba(0,0,0,.08),0 8px 32px rgba(0,0,0,.06);
-      --radius:16px;--radius-sm:10px;--radius-xs:8px;
+      --yellow:#f5f56a;--navy:#1e2d5a;--navy2:#162247;
+      --blue-btn:#ccddf5;--blue-border:#5588cc;
+      --green:#2d7a4a;--green-bg:#d4f0e0;
+      --red:#c0392b;--red-bg:#fde8e6;
+      --amber:#d97706;--amber-bg:#fef3c7;
+      --muted:#5a6a8a;--border:#b8c8e0;
+      --sidebar-w:200px;
     }
-    body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased}
-    .app{max-width:860px;margin:0 auto;padding:0 1.25rem 4rem}
-    .hero{background:linear-gradient(135deg,#1e3a8a 0%,#1d4ed8 60%,#2563eb 100%);margin:0 -1.25rem 2rem;padding:0;position:relative}
-    .hero-in{position:relative;max-width:1100px;margin:0 auto;padding:0 1.5rem}
-    .hero-top{background:rgba(0,0,0,.15);padding:.4rem 1.25rem;margin:0 -1.25rem;display:flex;align-items:center;gap:16px;border-bottom:1px solid rgba(255,255,255,.1)}
-    .hero-top-inner{max-width:1100px;margin:0 auto;width:100%;display:flex;align-items:center;justify-content:space-between}
-    .badge{display:inline-flex;align-items:center;gap:6px;color:rgba(255,255,255,.5);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase}
-    .badge-dot{width:6px;height:6px;border-radius:50%;background:var(--brass-light);flex-shrink:0}
-    .hero-body{padding:1.5rem 0 1.5rem;display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;flex-wrap:wrap}
-    .hero h1{font-family:'Nunito',sans-serif;font-size:clamp(1.8rem,3.5vw,2.8rem);color:#ffffff;font-weight:600;line-height:1.1;letter-spacing:-.02em}
-    .hero h1 em{font-style:normal;color:#fbbf24;font-weight:900}
-    .hero-meta{font-size:.78rem;color:rgba(255,255,255,.55);line-height:1.8;text-align:right;flex-shrink:0}
-    .hero-meta strong{color:rgba(255,255,255,.9);display:block;font-size:.82rem}
-    .disc{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-left:3px solid var(--brass-light);padding:.7rem 1rem;color:rgba(255,255,255,.6);font-size:.77rem;margin-bottom:1.5rem;line-height:1.55}
-    .steps{display:flex;margin-bottom:2rem}
-    .step{flex:1;padding:.7rem 1rem;background:#fff;border:1px solid var(--border);font-size:.78rem;font-weight:600;color:var(--muted);display:flex;align-items:center;gap:8px}
-    .step:not(:last-child){border-right:none}
-    .step.active{background:var(--navy);color:#fff;border-color:var(--navy)}
-    .step.done{background:var(--green);color:#fff;border-color:var(--green)}
-    .sn{width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:.7rem;flex-shrink:0}
-    .step:not(.active):not(.done) .sn{background:var(--border);color:var(--muted)}
-    .card{background:#f0f2f7;border:1.5px solid #d4d8e8;border-radius:6px;padding:1.75rem;margin-bottom:1.25rem;box-shadow:var(--shadow)}
-    .stitle{font-family:'Nunito',sans-serif;font-size:1.15rem;color:var(--text);font-weight:800;margin-bottom:1.25rem;display:flex;align-items:center;gap:10px}
-    .stitle::after{display:none}
-    .arow{display:flex;gap:10px}
-    .ainput{flex:1;border:2px solid var(--border);border-radius:var(--radius-xs);padding:.75rem 1rem;font-family:'Nunito',sans-serif;font-size:.95rem;color:var(--text);background:var(--bg);outline:none;transition:border-color .2s,box-shadow .2s}
-    .ainput:focus{border-color:var(--navy);box-shadow:0 0 0 3px rgba(29,78,216,.12);background:#fff}
-    .btn{padding:.75rem 1.5rem;border:none;border-radius:var(--radius-xs);font-family:'Nunito',sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:8px}
-    .btn-primary{background:var(--navy);color:#fff}
-    .btn-primary:hover{background:#1e3550;transform:translateY(-1px)}
-    .btn-primary:disabled{background:#aaa;cursor:not-allowed;transform:none}
-    .btn-gold{background:var(--brass);color:#fff}
-    .btn-gold:hover{background:var(--brass-light);transform:translateY(-2px);box-shadow:0 4px 12px rgba(245,158,11,.3)}
-    .btn-outline{background:transparent;color:var(--navy);border:1px solid var(--border)}
-    .btn-outline:hover{border-color:var(--navy)}
-    .btn-sm{padding:.45rem .9rem;font-size:.8rem}
-    .zona-ok{background:var(--green-bg);border:none;border-radius:var(--radius);padding:1.2rem 1.4rem;margin-top:1rem}
-    .zona-ok h3{font-family:'Nunito',sans-serif;font-size:1rem;color:var(--green);margin-bottom:.4rem;font-weight:800}
-    .zona-code{font-size:2rem;font-weight:700;color:var(--navy);font-family:'Nunito',sans-serif}
-    .zona-range{font-size:.85rem;color:var(--muted);margin-top:.3rem}
-    .zona-actions{display:flex;gap:10px;margin-top:1rem;flex-wrap:wrap}
-    .geo-info{background:var(--brass-pale);border:none;border-radius:var(--radius-sm);padding:1rem 1.2rem;margin-top:1rem;font-size:.83rem;line-height:1.6}
-    .geo-info strong{color:var(--navy)}
-    .geo-method{display:inline-block;padding:.15rem .5rem;border-radius:3px;font-size:.7rem;font-weight:700;margin-left:6px;vertical-align:middle}
-    .geo-exact{background:#e8f5f0;color:#1a5c2a}
-    .geo-approx{background:#fff3e0;color:#8b4f00}
-    .mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:6px;margin-top:1rem;max-height:340px;overflow-y:auto;padding-right:4px}
-    .zbtn{padding:.5rem;border:2px solid var(--border);border-radius:var(--radius-xs);background:var(--bg);cursor:pointer;font-family:'Nunito',sans-serif;font-size:.75rem;font-weight:700;color:var(--text);transition:all .15s;text-align:center}
-    .zbtn:hover{border-color:var(--navy);background:var(--bg)}
-    .zbtn.sel{border-color:var(--navy);background:var(--navy);color:#fff;box-shadow:0 2px 8px rgba(29,78,216,.3)}
-    .zbtn .zr{font-size:.62rem;font-weight:400;opacity:.75;display:block;margin-top:2px}
-    .fgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1.25rem}
-    .field{display:flex;flex-direction:column;gap:.35rem}
-    .field label{min-height:2.2em;display:flex;align-items:flex-end}
-    .field label{font-size:.72rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text)}
-    .field input,.field select{border:2px solid var(--border);border-radius:var(--radius-xs);padding:.65rem .85rem;font-family:'Nunito',sans-serif;font-size:.92rem;color:var(--text);background:var(--bg);outline:none;transition:border-color .2s,box-shadow .2s}
-    .field input:focus,.field select:focus{border-color:var(--navy);box-shadow:0 0 0 3px rgba(29,78,216,.12);background:#fff}
-    .field .hint{font-size:.7rem;color:var(--muted)}
-    .err{background:var(--red-bg);border:none;color:var(--red);border-radius:var(--radius-xs);padding:.75rem 1rem;font-size:.83rem;font-weight:600;margin-top:.75rem;box-shadow:0 0 0 2px #fca5a5}
-    .warn{background:#fffbeb;border:none;border-radius:var(--radius-xs);padding:.75rem 1rem;font-size:.83rem;margin-top:.75rem;line-height:1.6;box-shadow:0 0 0 2px #fcd34d}
-    .info-box{background:#eff6ff;border:none;border-radius:var(--radius-xs);padding:.75rem 1rem;font-size:.83rem;margin-top:.75rem;line-height:1.6;box-shadow:0 0 0 2px #bfdbfe}
+    body{font-family:'Inter','Segoe UI',sans-serif;background:var(--yellow);color:var(--navy);min-height:100vh;-webkit-font-smoothing:antialiased}
+    #root{display:flex;min-height:100vh}
+
+    /* SIDEBAR */
+    .sidebar{width:var(--sidebar-w);background:var(--navy);min-height:100vh;position:fixed;top:0;left:0;bottom:0;display:flex;flex-direction:column;align-items:center;padding:1.75rem 1rem 2rem;z-index:10}
+    .sidebar-logo{width:90px;height:90px;border-radius:50%;background:#6677aa;margin-bottom:2rem;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:2.2rem}
+    .sidebar-steps{width:100%;display:flex;flex-direction:column;position:relative;gap:0}
+    .sidebar-steps::before{content:'';position:absolute;left:21px;top:28px;bottom:28px;width:2px;border-left:2px dashed rgba(255,255,255,0.2)}
+    .sidebar-item{display:flex;align-items:center;gap:10px;padding:7px 0;position:relative;z-index:1}
+    .sidebar-bullet{width:44px;height:44px;border-radius:8px;background:var(--yellow);display:flex;align-items:center;justify-content:center;font-size:1.05rem;font-weight:800;color:var(--navy);flex-shrink:0;transition:all 0.2s}
+    .sidebar-bullet.inactive{background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.3);font-size:.85rem}
+    .sidebar-bullet.done{background:var(--green);color:white;font-size:.9rem}
+    .sidebar-label{font-size:.72rem;font-weight:600;color:rgba(255,255,255,0.9);line-height:1.3}
+    .sidebar-label.inactive{color:rgba(255,255,255,0.3)}
+    .sidebar-label.done{color:rgba(255,255,255,0.55)}
+
+    /* MAIN */
+    .main{margin-left:var(--sidebar-w);flex:1;padding:2rem 2.5rem 4rem;max-width:960px}
+    .main-centered{margin-left:0;max-width:100%;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:2rem}
+
+    /* HEADER BOX */
+    .page-header{background:var(--navy);border-radius:18px;padding:1.5rem 2rem;margin-bottom:1.75rem;color:white}
+    .page-header h1{font-size:1.6rem;font-weight:800;text-align:center;line-height:1.2}
+    .page-header h2{font-size:1.2rem;font-weight:700;text-align:center;line-height:1.3}
+    .page-header p{font-size:.88rem;text-align:center;color:rgba(255,255,255,.8);margin-top:.5rem;line-height:1.6}
+
+    /* CONTENT BOX */
+    .content-box{background:var(--navy);border-radius:18px;padding:1.5rem 2rem;margin-bottom:1.5rem;color:white}
+    .content-box p{font-size:.88rem;text-align:center;color:rgba(255,255,255,.85);line-height:1.65}
+    .content-box p.bold{font-weight:700;font-size:1rem;color:white;margin-bottom:.5rem}
+
+    /* INPUTS */
+    .ainput{width:100%;padding:.9rem 1.1rem;font-size:1rem;font-weight:500;font-family:'Inter',sans-serif;border:2px solid var(--navy);border-radius:12px;background:white;color:var(--navy);outline:none;transition:border-color .2s,box-shadow .2s}
+    .ainput:focus{border-color:var(--blue-border);box-shadow:0 0 0 3px rgba(85,136,204,.15)}
+    .field{display:flex;flex-direction:column}
+    .field label{font-size:.82rem;font-weight:700;color:var(--navy);margin-bottom:.4rem}
+    .field input,.field select{border:2px solid var(--navy);border-radius:10px;padding:.7rem .9rem;font-family:'Inter',sans-serif;font-size:.92rem;color:var(--navy);background:white;outline:none;transition:border-color .2s,box-shadow .2s}
+    .field input:focus,.field select:focus{border-color:var(--blue-border);box-shadow:0 0 0 3px rgba(85,136,204,.15)}
+    .field .hint{font-size:.7rem;color:var(--muted);margin-top:.3rem}
+    .fgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1.25rem;margin-bottom:1.25rem}
+
+    /* BUTTONS */
+    .btn-start{display:block;width:100%;max-width:360px;margin:0 auto;padding:1.1rem 2rem;background:var(--blue-btn);border:2px solid var(--blue-border);border-radius:14px;font-family:'Inter',sans-serif;font-size:1.1rem;font-weight:800;color:var(--navy);cursor:pointer;transition:all .2s;text-align:center;letter-spacing:.02em}
+    .btn-start:hover{background:#b8ccee;transform:translateY(-1px)}
+    .btn-cerca{padding:.9rem 2rem;background:var(--blue-btn);border:2px solid var(--blue-border);border-radius:12px;font-family:'Inter',sans-serif;font-size:.95rem;font-weight:700;color:var(--navy);cursor:pointer;transition:all .2s;white-space:nowrap}
+    .btn-cerca:hover{background:#b8ccee}
+    .btn-cerca:disabled{opacity:.5;cursor:not-allowed}
+    .btn-nav{padding:.85rem 2rem;background:var(--blue-btn);border:2px solid var(--blue-border);border-radius:12px;font-family:'Inter',sans-serif;font-size:.95rem;font-weight:700;color:var(--navy);cursor:pointer;transition:all .2s}
+    .btn-nav:hover{background:#b8ccee}
+    .btn-calcola{padding:1rem 2.5rem;background:var(--navy);border:none;border-radius:12px;font-family:'Inter',sans-serif;font-size:1rem;font-weight:800;color:white;cursor:pointer;transition:all .2s;box-shadow:0 4px 16px rgba(30,45,90,.25)}
+    .btn-calcola:hover{background:var(--navy2);transform:translateY(-1px)}
+    .nav-row{display:flex;justify-content:space-between;align-items:center;margin-top:2rem;gap:1rem}
+
+    /* FIELD LABELS & SEPARATORS */
+    .field-label{font-size:.9rem;font-weight:700;color:var(--navy);margin-bottom:.5rem;display:block}
+    .field-sep{width:100%;height:2px;background:var(--navy);opacity:.15;margin-bottom:1rem}
+
+    /* OPTION CARDS */
+    .opt-grid{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:1.25rem}
+    .opt-card{flex:1;min-width:110px;background:var(--navy);border:2px solid var(--navy);border-radius:14px;padding:1rem .75rem;text-align:center;cursor:pointer;transition:all .2s;color:white}
+    .opt-card:hover{background:#2a3f7a}
+    .opt-card.sel{background:var(--blue-btn);border-color:var(--blue-border);color:var(--navy)}
+    .opt-icon{font-size:1.6rem;margin-bottom:.4rem}
+    .opt-title{font-size:.9rem;font-weight:700}
+    .opt-sub{font-size:.72rem;opacity:.75;margin-top:.2rem}
+    .opt-perc{font-size:.85rem;font-weight:700;margin-top:.35rem;color:#fbbf24}
+    .opt-card.sel .opt-perc{color:var(--green)}
+
+    /* PILLS */
+    .pill-grid{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:1.25rem}
+    .pill{display:inline-flex;align-items:center;gap:6px;padding:.5rem .9rem;border:2px solid var(--navy);border-radius:60px;background:white;cursor:pointer;font-family:'Inter',sans-serif;font-size:.8rem;font-weight:600;color:var(--navy);transition:all .18s;user-select:none}
+    .pill:hover{background:var(--blue-btn)}
+    .pill.on{background:var(--navy);color:white}
+
+    /* ZONE GRID */
+    .mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:6px;margin-top:1rem;max-height:320px;overflow-y:auto}
+    .zbtn{padding:.5rem;border:2px solid var(--navy);border-radius:8px;background:white;cursor:pointer;font-family:'Inter',sans-serif;font-size:.72rem;font-weight:700;color:var(--navy);transition:all .15s;text-align:center}
+    .zbtn:hover{background:var(--blue-btn)}
+    .zbtn.sel{background:var(--navy);color:white}
+    .zbtn .zr{font-size:.6rem;font-weight:400;opacity:.7;display:block;margin-top:2px}
+
+    /* GEO RESULT */
+    .geo-result{background:var(--navy);color:white;border-radius:16px;padding:1.5rem 2rem;margin-top:1.25rem;text-align:center}
+    .geo-result h3{font-size:1.2rem;font-weight:700;color:var(--yellow);margin-bottom:.4rem}
+    .zona-code{font-size:2.2rem;font-weight:800;color:white}
+    .zona-sub{font-size:.85rem;color:rgba(255,255,255,.7);margin-top:.35rem}
+    .geo-method{display:inline-block;padding:.2rem .6rem;border-radius:4px;font-size:.72rem;font-weight:700;margin-left:6px}
+    .geo-exact{background:var(--green-bg);color:var(--green)}
+    .geo-approx{background:var(--amber-bg);color:var(--amber)}
+
+    /* ZBAR */
+    .zbar{background:white;border:2px solid var(--navy);border-radius:10px;padding:.65rem 1rem;margin-bottom:1rem;font-size:.82rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;color:var(--navy)}
+    .rlink{font-size:.78rem;color:var(--navy);background:none;border:none;cursor:pointer;text-decoration:underline;padding:0;font-weight:600}
+
+    /* SF BOX */
+    .sf-box{background:var(--navy);color:white;border-radius:14px;padding:1rem 1.25rem;margin:1rem 0;display:flex;align-items:center;gap:1.2rem;flex-wrap:wrap}
+    .sf-num{font-size:2.2rem;font-weight:800;color:var(--yellow)}
+    .sf-label{font-size:.85rem;color:rgba(255,255,255,.85);line-height:1.6}
+    .sf-label strong{color:var(--yellow);display:block;font-size:1rem;margin-bottom:2px}
+
+    /* MAGG */
+    .magg-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:.75rem;margin-bottom:1rem}
+    .magg-grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem;margin-bottom:1rem}
+    .magg-item{background:var(--navy);border:2px solid var(--navy);border-radius:12px;padding:.85rem 1rem;cursor:pointer;transition:all .18s;text-align:left;color:white}
+    .magg-item:hover{background:#2a3f7a}
+    .magg-item.on{background:var(--blue-btn);border-color:var(--blue-border);color:var(--navy)}
+    .magg-item .mt{font-size:.85rem;font-weight:700}
+    .magg-item .ms{font-size:.7rem;opacity:.75;margin-top:2px}
+    .magg-item .mp{font-size:1rem;font-weight:800;color:#fbbf24;margin-top:5px}
+    .magg-item.on .mp{color:var(--green)}
+    .sec-hdr{font-size:.75rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--navy);margin:1.25rem 0 .6rem;padding-bottom:.4rem;border-bottom:2px solid rgba(30,45,90,.2)}
+
+    /* MESSAGES */
+    .err{background:var(--red-bg);border-left:4px solid var(--red);border-radius:10px;padding:.75rem 1rem;font-size:.85rem;font-weight:600;color:var(--red);margin-top:.75rem}
+    .warn{background:var(--amber-bg);border-left:4px solid var(--amber);border-radius:10px;padding:.75rem 1rem;font-size:.83rem;margin-top:.75rem;line-height:1.6;color:var(--navy)}
+    .info-box{background:white;border:2px solid var(--navy);border-radius:10px;padding:.75rem 1.25rem;font-size:.83rem;margin-top:.75rem;line-height:1.6;color:var(--navy)}
     .loading{color:var(--muted);font-size:.85rem;margin-top:.5rem;display:flex;align-items:center;gap:8px}
 
-    /* RISULTATI */
-    .results{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.25rem;margin-bottom:2rem}
-    .scard{background:var(--white);border:none;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-md);transition:transform .2s,box-shadow .2s}
-    .scard-best{box-shadow:0 0 0 3px var(--navy),var(--shadow-md)}
-    .scard-best .ch2{background:linear-gradient(135deg,#1e3a8a,#1d4ed8);} .scard-best .ch2 h3{color:#fff} .scard-best .ch2 .sub{color:rgba(255,255,255,.7)} .scard-best .ctag{background:rgba(255,255,255,.2);color:#fff}
-    .best-badge{display:inline-block;background:#f59e0b;color:#fff;font-size:.6rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:.2rem .65rem;border-radius:20px;margin-left:6px;vertical-align:middle}
-    .scard:hover{transform:translateY(-3px);box-shadow:0 8px 32px rgba(0,0,0,.12)}
-    .ch2{padding:1.1rem 1.3rem .9rem;border-bottom:1px solid var(--border)}
-    .ctag{font-size:.63rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:.22rem .55rem;border-radius:2px;display:inline-block;margin-bottom:.5rem}
-    .t-s{background:#fee8e8;color:#8b1a2a}
-    .t-c{background:#e8f0fe;color:#1a3a8b}
-    .t-l{background:#e8f5e9;color:#1a5c2a}
-    .t-e{background:#fff3e0;color:#8b4f00}
-    .ch2 h3{font-family:'Nunito',sans-serif;font-size:1rem;color:var(--navy);margin-bottom:.25rem}
-    .ch2 .sub{font-size:.75rem;color:var(--muted);line-height:1.4}
-    .cb{padding:1rem 1.3rem;background:var(--white)}
-    .trow{display:flex;align-items:center;justify-content:space-between;padding:.45rem 0;border-bottom:1px dashed var(--border)}
-    .trow:last-child{border-bottom:none}
-    .tl{font-size:.78rem;color:var(--text);font-weight:500}
-    .tv{font-size:.95rem;font-weight:700;font-variant-numeric:tabular-nums}
-    .tv-small{font-size:.8rem;font-weight:600;font-variant-numeric:tabular-nums;color:var(--muted)}
-    .pos{color:var(--green)}.neg{color:var(--red)}.best{color:var(--green)}.worst{color:var(--red)}
-    .cf{padding:.65rem 1.3rem;background:var(--bg);border-top:1px solid var(--border);font-size:.71rem;color:var(--muted);line-height:1.5}
+    /* RESULTS */
+    .results-header{background:var(--navy);color:white;border-radius:18px;padding:1.5rem 2rem;text-align:center;margin-bottom:1.5rem}
+    .results-header h1{font-size:1.8rem;font-weight:800;color:var(--yellow)}
+    .results-header .sub{font-size:.88rem;color:rgba(255,255,255,.75);margin-top:.4rem}
+    .stitle{font-size:1.1rem;font-weight:800;color:var(--navy);margin-bottom:1rem;display:flex;align-items:center;gap:8px;padding-bottom:.5rem;border-bottom:2px solid rgba(30,45,90,.15)}
 
-    /* TAB FISCALE */
-    .fiscal-tabs{display:flex;gap:0;margin-bottom:0;border-radius:4px 4px 0 0;overflow:hidden;border:1px solid var(--border);border-bottom:none;width:fit-content}
-    .fiscal-tab{padding:.45rem 1rem;font-size:.75rem;font-weight:600;cursor:pointer;background:#fff;color:var(--muted);border:none;font-family:'Nunito',sans-serif;transition:all .15s}
-    .fiscal-tab.on{background:var(--navy);color:#fff}
-    .fiscal-section{border:1px solid var(--border);border-radius:0 4px 4px 4px;padding:1rem;background:#fff;margin-bottom:1rem}
-
-    /* TABELLA */
-    .twrap{background:var(--white);border:none;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-md);margin-bottom:2rem;overflow-x:auto}
-    table{width:100%;border-collapse:collapse;min-width:580px}
-    thead tr{background:var(--navy);border-bottom:none}
-    thead th{padding:.85rem 1.1rem;text-align:left;font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.7)}
-    thead th:first-child{color:#fff}
-    tbody tr{border-bottom:1px solid var(--border)}
-    tbody tr:last-child{border-bottom:none}
-    tbody tr:nth-child(even){background:var(--bg)}
-    tbody td{padding:.75rem 1.1rem;font-size:.82rem}
-    tbody td:first-child{font-weight:600;color:var(--navy)}
-    .sub-row{font-size:.72rem;color:var(--muted);display:block}
-
-    /* GRAFICO */
-    .pbtn{display:flex;gap:8px;margin-bottom:1.2rem;flex-wrap:wrap}
-    .pbtn button{padding:.38rem .9rem;border:1px solid var(--border);border-radius:3px;background:#fff;color:var(--text);cursor:pointer;font-family:'Nunito',sans-serif;font-size:.82rem;font-weight:600;transition:all .15s}
-    .pbtn button.a{background:var(--navy);color:#fff;border-color:var(--navy)}
-    .bg{margin-bottom:1.2rem}
-    .bg-label{font-size:.76rem;font-weight:600;color:var(--text);margin-bottom:.35rem}
-    .bt{background:var(--bg2);border-radius:3px;height:34px;overflow:hidden}
-    .bf{height:100%;border-radius:3px;display:flex;align-items:center;padding:0 12px;font-size:.78rem;font-weight:700;color:#fff;min-width:90px;transition:width .6s ease}
-    .bf-s{background:linear-gradient(90deg,#9b2335,#c74455)}
-    .bf-c{background:linear-gradient(90deg,#1a3a8b,#3058c9)}
-    .bf-l{background:linear-gradient(90deg,#1a5c2a,#2d8b45)}
-    .bf-e{background:linear-gradient(90deg,#8b4f00,#c97a00)}
-    .note{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:1.1rem 1.3rem;font-size:.8rem;color:var(--muted);line-height:1.7}
-    .note ul{padding-left:1.1rem}
-    .note li{margin-bottom:.35rem}
-    .note strong{color:var(--text)}
-    .rlink{font-size:.78rem;color:var(--muted);background:none;border:none;cursor:pointer;text-decoration:underline;padding:0}
-    .rlink:hover{color:var(--navy)}
-    .zbar{background:var(--bg);border:none;border-radius:var(--radius-sm);padding:.7rem 1rem;margin-bottom:1.2rem;font-size:.82rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
-    .pill-grid{display:flex;flex-wrap:wrap;gap:8px;margin-top:.75rem}
-    .pill{display:inline-flex;align-items:center;gap:6px;padding:.42rem .85rem;border:2px solid var(--border);border-radius:20px;background:var(--bg);cursor:pointer;font-family:'Nunito',sans-serif;font-size:.8rem;font-weight:600;color:var(--text);transition:all .18s;user-select:none}
-    .pill:hover{border-color:#2d7a5f;color:var(--text)}
-    .pill.on{background:var(--green-bg);border-color:var(--green);color:var(--green);font-weight:700}
-    .pill-icon{font-size:1rem;line-height:1}
-    .sf-box{background:var(--bg);border:none;border-radius:var(--radius-sm);padding:1rem 1.2rem;margin-top:1rem;display:flex;align-items:center;gap:1.2rem;flex-wrap:wrap}
-    .sf-num{font-family:'Nunito',sans-serif;font-size:2rem;font-weight:700;color:var(--navy)}
-    .sf-label{font-size:.8rem;color:var(--muted);line-height:1.6}
-    .sf-label strong{color:var(--text);display:block;font-size:.95rem;margin-bottom:2px}
-    .magg-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:.75rem;margin-top:.75rem}
-    .magg-grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem;margin-top:.75rem}
-    .magg-item{background:var(--bg);border:2px solid var(--border);border-radius:var(--radius-sm);padding:.75rem 1rem;cursor:pointer;transition:all .18s;text-align:left}
-    .magg-item:hover{border-color:#2d7a5f}
-    .magg-item.on{background:var(--green-bg);border-color:var(--green)}
-    .magg-item .mt{font-size:.8rem;font-weight:600;color:var(--text)}
-    .magg-item .ms{font-size:.7rem;color:var(--muted);margin-top:2px;font-weight:400}
-    .magg-item .mp{font-size:1.05rem;font-weight:800;color:var(--green);margin-top:5px}
-    .sec-hdr{font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text);margin:1.3rem 0 .5rem;padding-bottom:.4rem;border-bottom:2px solid var(--border)}
+    /* FISCAL */
+    .fiscal-tabs{display:flex;gap:.5rem;margin-bottom:1rem;flex-wrap:wrap}
+    .fiscal-tab{flex:1;padding:.75rem 1rem;border:2px solid var(--navy);background:white;border-radius:10px;font-weight:700;font-size:.9rem;cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s;color:var(--navy)}
+    .fiscal-tab.on{background:var(--navy);border-color:var(--navy);color:white}
+    .fiscal-section{background:white;border:2px solid var(--navy);border-radius:12px;padding:1rem 1.25rem;margin-bottom:1.5rem}
     .irpef-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;margin-top:.5rem}
-    .irpef-sc{background:var(--bg);border:1px solid var(--border);border-radius:4px;padding:.6rem .8rem;font-size:.78rem}
-    .irpef-sc .isc-title{font-weight:700;color:var(--navy);font-size:.75rem}
-    .irpef-sc .isc-val{font-size:1.05rem;font-weight:700;margin-top:3px}
-    .irpef-sc .isc-sub{font-size:.67rem;color:var(--muted);margin-top:2px}
-    .delta-badge{display:inline-block;padding:.1rem .4rem;border-radius:3px;font-size:.7rem;font-weight:700}
-    .delta-pos{background:#e8f5f0;color:#1a5c2a}
-    .delta-neg{background:#fee8e8;color:#8b1a2a}
 
-    @media print {
-      /* Mostra solo header + 4 card risultati */
-      .hero, .steps, .card, .btn, .pbtn,
-      .twrap, .note, .bg, .fiscal-tabs, .fiscal-section,
-      .stitle, .pbtn, [class*="warn"], [class*="info-box"] { display: none !important; }
-      .print-header { display: block !important; margin-bottom: 14px; border-bottom: 2px solid #0f1e2e; padding-bottom: 10px; }
-      .results { display: grid !important; grid-template-columns: repeat(2,1fr); gap: 10px; margin: 0 !important; }
-      .scard { display: block !important; box-shadow: none !important; break-inside: avoid; }
-      .scard-best { border: 2px solid #2d7a5f !important; }
-      body { background: #fff; color: #000; font-size: 10pt; }
-      .app { max-width: 100%; padding: 0; }
-      @page { margin: 1.2cm; size: A4; }
-    }
-    .print-header { display: none; }
+    /* SCENARIO CARDS */
+    .scenario-block{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:2.5rem}
+    .scard{background:white;border:2px solid var(--navy);border-radius:18px;overflow:hidden;transition:transform .2s,box-shadow .2s}
+    .scard:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(30,45,90,.15)}
+    .scard-best{border-color:var(--amber);box-shadow:0 4px 16px rgba(217,119,6,.2)}
+    .ch2{padding:1.1rem 1.3rem .9rem;background:var(--navy)}
+    .scard-best .ch2{background:linear-gradient(135deg,#1e2d5a,#2d4a9a)}
+    .ch2 h3{font-size:1.05rem;font-weight:700;color:white;margin-bottom:.25rem}
+    .ch2 .sub{font-size:.72rem;color:rgba(255,255,255,.65);line-height:1.4}
+    .ctag{font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.22rem .65rem;border-radius:20px;display:inline-block;margin-bottom:.5rem}
+    .t-s{background:#fee2e2;color:#c0392b}.t-c{background:var(--blue-btn);color:var(--navy)}
+    .t-l{background:var(--green-bg);color:var(--green)}.t-e{background:var(--amber-bg);color:var(--amber)}
+    .best-badge{display:inline-block;background:var(--amber);color:white;font-size:.6rem;font-weight:800;padding:.2rem .65rem;border-radius:20px;margin-left:6px;vertical-align:middle}
+    .cb{padding:1rem 1.3rem;background:white}
+    .trow{display:flex;align-items:center;justify-content:space-between;padding:.6rem 0;border-bottom:1px solid rgba(30,45,90,.08)}
+    .trow:last-child{border-bottom:none}
+    .tl{font-size:.8rem;color:var(--muted);font-weight:500}
+    .tv{font-size:1rem;font-weight:800}
+    .tv-small{font-size:.8rem;font-weight:600;color:var(--muted)}
+    .pos{color:var(--green)}.neg{color:var(--red)}.best{color:var(--green)}.worst{color:var(--red)}
+    .cf{padding:.65rem 1.3rem;background:rgba(30,45,90,.04);font-size:.71rem;color:var(--muted);line-height:1.5}
 
-
-    /* ── SCHEDE INFORMATIVE ─────────────────────────────────────────────── */
-    .schede-layout{display:grid;grid-template-columns:200px 1fr 200px;gap:1rem;margin-bottom:2rem;align-items:start}
-    .scheda{border-radius:var(--radius);padding:1.25rem;display:flex;flex-direction:column;gap:.4rem}
-    .scheda-sfitta{background:#fff1f2;border:none;box-shadow:0 0 0 2px #fda4af}
-    .scheda-ers{background:#f0fdf4;border:none;box-shadow:0 0 0 2px #86efac}
+    /* SCHEDE */
+    .scheda{border-radius:14px;padding:1.25rem;display:flex;flex-direction:column;gap:.4rem}
+    .scheda-sfitta{background:#fff1f2;border:2px solid #fda4af}
+    .scheda-ers{background:#f0fdf4;border:2px solid #86efac}
     .scheda-icon{font-size:1.6rem;line-height:1;margin-bottom:.1rem}
-    .scheda-title{font-family:'Nunito',sans-serif;font-size:1rem;font-weight:700;line-height:1.25;margin-bottom:.2rem}
-    .scheda-sfitta .scheda-title{color:#881337}
-    .scheda-ers .scheda-title{color:#14532d}
-    .scheda-msg{font-size:.73rem;font-weight:600;font-style:italic;line-height:1.45;padding:.45rem .6rem;border-radius:4px;margin-bottom:.3rem}
+    .scheda-title{font-size:1rem;font-weight:700;line-height:1.25;margin-bottom:.2rem}
+    .scheda-sfitta .scheda-title{color:#881337}.scheda-ers .scheda-title{color:#14532d}
+    .scheda-msg{font-size:.73rem;font-weight:600;font-style:italic;line-height:1.45;padding:.45rem .6rem;border-radius:8px;margin-bottom:.3rem}
     .scheda-sfitta .scheda-msg{background:#ffe4e6;color:#881337;border-left:3px solid #f43f5e}
     .scheda-ers .scheda-msg{background:#dcfce7;color:#14532d;border-left:3px solid #22c55e}
     .scheda-item{display:flex;gap:.4rem;font-size:.72rem;line-height:1.4;color:#1f2937;align-items:flex-start}
     .scheda-bullet{flex-shrink:0;font-size:.6rem;margin-top:.25rem;opacity:.5}
     .scheda-divider{height:1px;margin:.4rem 0}
-    .scheda-sfitta .scheda-divider{background:#fecdd3}
-    .scheda-ers .scheda-divider{background:#bbf7d0}
-    .scheda-stat{padding:.5rem .65rem;border-radius:5px;font-size:.7rem;font-weight:500;line-height:1.3}
+    .scheda-sfitta .scheda-divider{background:#fecdd3}.scheda-ers .scheda-divider{background:#bbf7d0}
+    .scheda-stat{padding:.5rem .65rem;border-radius:8px;font-size:.7rem;font-weight:500;line-height:1.3}
     .scheda-sfitta .scheda-stat{background:#ffe4e6;color:#881337}
     .scheda-ers .scheda-stat{background:#dcfce7;color:#14532d}
-    .scheda-stat-num{font-family:'Nunito',sans-serif;font-size:1.3rem;font-weight:700;display:block;line-height:1.1;margin-bottom:.1rem}
-    @media(max-width:900px){.schede-layout{grid-template-columns:1fr}}
+    .scheda-stat-num{font-size:1.3rem;font-weight:800;display:block;line-height:1.1;margin-bottom:.1rem}
 
-    .nav-btns{display:flex;justify-content:space-between;align-items:center;margin-top:1.75rem;gap:1rem}
-    .nav-btns-right{display:flex;justify-content:flex-end;margin-top:1.75rem}
-    .btn-back{background:var(--bg2);color:var(--muted);border:none;border-radius:var(--radius-xs);padding:.7rem 1.25rem;font-family:'Nunito',sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:6px}
-    .btn-back:hover{background:var(--border);color:var(--text)}
-    .btn-next{background:var(--navy);color:#fff;border:none;border-radius:var(--radius-xs);padding:.7rem 1.5rem;font-family:'Nunito',sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:6px}
-    .btn-next:hover{background:var(--navy2);transform:translateY(-1px);box-shadow:0 4px 12px rgba(29,78,216,.25)}
-    .btn-next:disabled{background:var(--muted2);cursor:not-allowed;transform:none;box-shadow:none}
-    .btn-calcola{background:linear-gradient(135deg,#059669,#10b981);color:#fff;border:none;border-radius:99px;padding:.9rem 2rem;font-family:'Nunito',sans-serif;font-size:1rem;font-weight:800;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:8px;box-shadow:0 4px 16px rgba(5,150,105,.3)}
-    .btn-calcola:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(5,150,105,.4)}
-    @media(max-width:600px){
-      .results{grid-template-columns:1fr}
-      .fgrid{grid-template-columns:1fr}
-      .steps{flex-direction:column}
-      .arow{flex-direction:column}
-      .magg-grid{grid-template-columns:1fr}
-      .irpef-grid{grid-template-columns:1fr}
+    /* CHART */
+    .pbtn{display:flex;gap:8px;margin-bottom:1.2rem;flex-wrap:wrap}
+    .pbtn button{padding:.5rem 1.1rem;border:2px solid var(--navy);border-radius:8px;background:white;color:var(--navy);cursor:pointer;font-family:'Inter',sans-serif;font-size:.82rem;font-weight:700;transition:all .15s}
+    .pbtn button.a{background:var(--navy);color:white}
+    .bg{margin-bottom:1rem}.bg-label{font-size:.78rem;font-weight:600;color:var(--navy);margin-bottom:.35rem}
+    .bt{background:rgba(30,45,90,.12);border-radius:8px;height:38px;overflow:hidden}
+    .bf{height:100%;border-radius:8px;display:flex;align-items:center;padding:0 14px;font-size:.78rem;font-weight:700;color:white;min-width:90px;transition:width .6s ease}
+    .bf-s{background:linear-gradient(90deg,#9b2335,#c74455)}
+    .bf-c{background:linear-gradient(90deg,#1e2d5a,#3058c9)}
+    .bf-l{background:linear-gradient(90deg,#1a5c2a,#2d8b45)}
+    .bf-e{background:linear-gradient(90deg,#8b4f00,#c97a00)}
+
+    /* TABLE */
+    .twrap{background:white;border:2px solid var(--navy);border-radius:14px;overflow:hidden;margin-bottom:2rem;overflow-x:auto}
+    table{width:100%;border-collapse:collapse;min-width:580px}
+    thead tr{background:var(--navy)}
+    thead th{padding:.85rem 1.1rem;text-align:left;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.75)}
+    thead th:first-child{color:white}
+    tbody tr{border-bottom:1px solid rgba(30,45,90,.1)}
+    tbody tr:last-child{border-bottom:none}
+    tbody tr:nth-child(even){background:rgba(30,45,90,.03)}
+    tbody td{padding:.75rem 1.1rem;font-size:.82rem;color:var(--navy)}
+    tbody td:first-child{font-weight:700}
+    .sub-row{font-size:.72rem;color:var(--muted);display:block}
+    td.best{color:var(--green);font-weight:800}td.worst{color:var(--red)}
+
+    /* MISC */
+    .delta-badge{display:inline-block;padding:.1rem .4rem;border-radius:3px;font-size:.7rem;font-weight:700}
+    .delta-pos{background:var(--green-bg);color:var(--green)}.delta-neg{background:var(--red-bg);color:var(--red)}
+    .note{background:white;border:2px solid rgba(30,45,90,.2);border-radius:14px;padding:1.25rem 1.5rem;font-size:.79rem;color:var(--muted);line-height:1.75;margin-top:1.5rem}
+    .note ul{padding-left:1.1rem}.note li{margin-bottom:.35rem}.note strong{color:var(--navy)}
+    .print-header{display:none}
+
+    @media(max-width:700px){
+      .sidebar{display:none}.main{margin-left:0;padding:1.25rem 1rem 3rem}
+      .scenario-block{grid-template-columns:1fr}.fgrid{grid-template-columns:1fr}
+      .magg-grid-4{grid-template-columns:repeat(2,1fr)}.irpef-grid{grid-template-columns:1fr}
+      .opt-grid{flex-direction:column}
     }
-  
+    @media print{
+      .sidebar,.nav-row,.fiscal-tabs,.pbtn,.btn-calcola,.btn-nav,.btn-cerca{display:none!important}
+      .main{margin-left:0}.print-header{display:block!important;margin-bottom:14px;border-bottom:2px solid var(--navy);padding-bottom:10px}
+      body{background:white}@page{margin:1.2cm;size:A4}
+    }
   </style>
 </head>
 <body>
 <div id="root"></div>
-
-<!-- Dati: accordo territoriale, OMI AdE, costanti fiscali, poligoni on-demand -->
 <script src="./data.js"></script>
-
 <script type="text/babel">
+const { useState, useMemo, useEffect, useRef } = React;
+
+
 
 const { useState, useMemo, useEffect, useRef } = React;
 
@@ -542,484 +545,497 @@ function App(){
     {id:"lib",   tag:"t-l",n:"D",titolo:"Libero mercato 4+4",  sub:"Cedolare secca 21% · IMU ordinaria · Canone da te proposto"},
   ];
 
+
+
+// ── SIDEBAR ──────────────────────────────────────────────────
+const STEP_LABELS = [
+  {n:"1",label:"Indirizzo"},
+  {n:"2",label:"Superficie e stato"},
+  {n:"3",label:"Dati economici"},
+  {n:"4",label:"Caratteristiche"},
+  {n:"5",label:"Maggiorazioni"},
+  {n:"6",label:"Risultati"},
+];
+function Sidebar({step}){
   return(
-    <div className="app">
-      {/* HERO — visibile solo a step 0 */}
-      {step===0&&(
-      <div className="hero">
-        <h1>Simulatore di <em style={{fontStyle:"normal",color:"#fbbf24",fontWeight:900}}>locazione</em> — Genova</h1>
-        <div className="badge"><span className="badge-dot"></span>Accordo Territoriale · giugno 2025</div>
+    <div className="sidebar">
+      <div className="sidebar-logo">🏠</div>
+      <div className="sidebar-steps">
+        {STEP_LABELS.map((s,i)=>{
+          const sNum=i+1,isActive=step===sNum,isDone=step>sNum,isInactive=step<sNum;
+          return(
+            <div className="sidebar-item" key={sNum}>
+              <div className={`sidebar-bullet ${isDone?"done":isInactive?"inactive":""}`}>{isDone?"✓":s.n}</div>
+              <div className={`sidebar-label ${isInactive?"inactive":isDone?"done":""}`}>{s.label}</div>
+            </div>
+          );
+        })}
       </div>
-      )}
+    </div>
+  );
+}
 
-      {/* 
+// ── APP ──────────────────────────────────────────────────────
+function App(){
+  const [step,setStep]=useState(0);
+  const [addr,setAddr]=useState("");
+  const [loading,setLoading]=useState(false);
+  const [geoErr,setGeoErr]=useState("");
+  const [geoResult,setGeoResult]=useState(null);
+  const [geoMethod,setGeoMethod]=useState(null);
+  const [zona,setZona]=useState(null);
+  const [mostraAll,setMostraAll]=useState(false);
+  const [mq,setMq]=useState("");
+  const [stato,setStato]=useState("normale");
+  const [s2err,setS2err]=useState("");
+  const [form,setForm]=useState({r:"",vi:"",cm:"",co:"",mn:""});
+  const [s3err,setS3err]=useState("");
+  const [attivi,setAttivi]=useState([2,4]);
+  const [maggArredo,setMaggArredo]=useState("no");
+  const [maggDurata,setMaggDurata]=useState("3");
+  const [ris,setRis]=useState(null);
+  const [periodo,setPeriodo]=useState(1);
+  const [fiscalTab,setFiscalTab]=useState("ced");
+  const [mostraAltri,setMostraAltri]=useState(false);
+  const risRef=useRef(null);
+  const [mostraAnalisi,setMostraAnalisi]=useState(false);
+  const [irpefScag,setIrpefScag]=useState(0);
 
-      {/* PROGRESS BAR */}
-      {(step > 0 && step < 6) && (
-        <div style={{marginBottom:"1.25rem"}}>
-          <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:".5rem"}}>
-            <span style={{fontSize:".75rem",fontWeight:700,color:"var(--navy)"}}>
-              {["","📍 Indirizzo","📐 Superficie","💶 Dati economici","✨ Caratteristiche","📋 Maggiorazioni"][step] || ""}
-            </span>
-            <span style={{fontSize:".7rem",color:"var(--muted)",fontWeight:600}}>{step} / 5</span>
-          </div>
-          <div style={{height:6,background:"var(--border)",borderRadius:99,overflow:"hidden"}}>
-            <div style={{height:"100%",background:"linear-gradient(90deg,#1d4ed8,#3b82f6)",borderRadius:99,width:`${(step/5)*100}%`,transition:"width .5s cubic-bezier(.4,0,.2,1)"}}></div>
-          </div>
-        </div>
-      )}
+  const fa=(k,v)=>setForm(f=>({...f,[k]:v}));
+  const togglePill=id=>setAttivi(p=>p.includes(id)?p.filter(x=>x!==id):[...p,id]);
+  const sottofascia=useMemo(()=>calcolaSottofascia(attivi),[attivi]);
+  const fasciaCalc=useMemo(()=>{
+    const zd=zona?ZT[zona]:null,m=parseFloat(mq);
+    if(!zd||isNaN(m)||m<=0) return null;
+    return canoneConFascia(zd,m,sottofascia,maggArredo,maggDurata);
+  },[zona,mq,sottofascia,maggArredo,maggDurata]);
+  const omiSug=useMemo(()=>omiSuggerimenti(zona,parseFloat(mq),stato),[zona,mq,stato]);
 
-            {/* ─── STEP 0: INTRO ─── */}
-      {step===0&&(
-        <div className="card" style={{textAlign:"center",padding:"2.5rem 2rem"}}>
-          <div style={{fontSize:"3rem",marginBottom:"1rem"}}>🏠</div>
-          <h2 style={{fontFamily:"'Nunito',sans-serif",fontSize:"1.6rem",fontWeight:900,color:"var(--navy)",marginBottom:".75rem",lineHeight:1.2}}>
-            Scopri quanto vale affittare il tuo immobile a Genova
-          </h2>
-          <p style={{fontSize:".95rem",color:"var(--muted)",lineHeight:1.7,maxWidth:480,margin:"0 auto 1.5rem"}}>
-            Questo simulatore confronta 4 scenari — casa sfitta, canone concordato, libero mercato e ERS — 
-            calcolando il netto su 1, 3 e 5 anni con IMU 2026, TARI reale e regime fiscale a scelta.
-          </p>
-          <div style={{background:"#eff6ff",borderRadius:12,padding:"1rem 1.25rem",marginBottom:"1.75rem",fontSize:".82rem",color:"#1e40af",lineHeight:1.6,textAlign:"left",boxShadow:"0 0 0 2px #bfdbfe"}}>
-            <strong>📍 Come funziona in 5 passi:</strong> indirizzo → zona OMI → superficie e stato → dati economici → caratteristiche → risultati in pochi secondi.
-            <br/><br/>
-            <strong style={{color:"#dc2626"}}>⚠️ Strumento orientativo.</strong> Per la certificazione ufficiale del canone concordato 
-            è obbligatoria l'assistenza di un'associazione firmataria dell'accordo territoriale. 
-            I calcoli non sostituiscono la consulenza professionale.
-          </div>
-          <button className="btn btn-primary" style={{fontSize:"1rem",padding:"1rem 2.5rem",borderRadius:99,width:"100%",maxWidth:320,justifyContent:"center"}}
-            onClick={()=>setStep(1)}>
-            Inizia la simulazione →
-          </button>
-          <div style={{marginTop:"1rem",fontSize:".72rem",color:"var(--muted)"}}>
-            Dati: Accordo Territoriale Genova 29/05/2025 · Quotazioni OMI AdE 2° sem. 2025 · IMU DCC 60/2024
-          </div>
-        </div>
-      )}
+  useEffect(()=>{
+    if(step>=1&&step<=5) window.scrollTo({top:0,behavior:"smooth"});
+    if(step===6&&risRef.current) risRef.current.scrollIntoView({behavior:"smooth",block:"start"});
+  },[step]);
 
-      {/* ─── STEP 1: INDIRIZZO ─── */}
-      {step===1 && (
-        <div className="card">
-          <div className="stitle">📍 Indirizzo dell'immobile</div>
-          <p style={{fontSize:".85rem",color:"var(--muted)",lineHeight:1.6,marginBottom:"1.25rem",paddingBottom:"1rem",borderBottom:"1px solid var(--border)"}}>Inserisci l’indirizzo dell’immobile per identificare automaticamente la zona OMI di riferimento dell’accordo territoriale.</p>
-          <div className="arow">
-            <input className="ainput" type="text"
-              placeholder="es. Via Balbi 4, Corso Buenos Aires 10, Via Rimassa 3..."
-              value={addr} onChange={e=>setAddr(e.target.value)}
-              onKeyDown={e=>e.key==="Enter"&&!loading&&cerca()} />
-            <button className="btn btn-primary" onClick={cerca} disabled={loading||!addr.trim()}>
-              {loading?"⏳":"🔍"} Cerca
-            </button>
-          </div>
-          {loading && <div className="loading">⏳ Geocoding in corso…</div>}
-          {geoErr  && <div className="err">⚠️ {geoErr}</div>}
+  const cerca=async()=>{
+    if(!addr.trim()) return;
+    setLoading(true);setGeoErr("");setGeoResult(null);setZona(null);setGeoMethod(null);
+    try{
+      const r=await geocode(addr);setGeoResult(r);
+      const lat=parseFloat(r.lat),lon=parseFloat(r.lon);
+      let found=null;
+      if(typeof ZONE_POLIGONI!=="undefined"){
+        for(const [z,polys] of Object.entries(ZONE_POLIGONI)){
+          for(const poly of polys){if(pointInPolygon([lon,lat],poly)){found=z;break;}}
+          if(found) break;
+        }
+      }
+      if(found){setZona(found);setGeoMethod("exact");}
+      else setGeoMethod("manual");
+    }catch(e){setGeoErr(e.message||"Indirizzo non trovato. Riprova.");}
+    finally{setLoading(false);}
+  };
 
-          {geoResult && (<>
-            <div className="geo-info" style={{marginTop:"1rem"}}>
-              <strong>📍 Indirizzo trovato:</strong> {geoResult.display_name?.split(",").slice(0,4).join(", ")}
-              {geoMethod==="exact"  && <span className="geo-method geo-exact">✓ Zona rilevata dai poligoni OMI ufficiali</span>}
-              {geoMethod==="manual" && <span className="geo-method geo-approx">⚠️ Fuori dai poligoni — seleziona manualmente</span>}
+  const confermZona=()=>{setStep(2);setMostraAll(false);};
+
+  const vaiStep3=()=>{
+    setS2err("");
+    if(!parseFloat(mq)||parseFloat(mq)<=0){setS2err("Inserisci la superficie in mq.");return;}
+    if(omiSug){fa("vi",omiSug.vi);fa("cm",omiSug.cm);}
+    setStep(3);
+  };
+
+  const vaiStep4=()=>{
+    setS3err("");
+    const r=parseFloat(form.r)||0,vi=parseFloat(form.vi)||0,cm=parseFloat(form.cm);
+    if(r<=0&&vi<=0){setS3err("Inserisci almeno la rendita catastale oppure il valore di mercato.");return;}
+    if(!cm||cm<=0){setS3err("Inserisci il canone mensile desiderato.");return;}
+    setStep(4);
+  };
+
+  const calcRes=()=>{
+    const r=parseFloat(form.r)||0,vi=parseFloat(form.vi)||0,m=parseFloat(mq),cm=parseFloat(form.cm);
+    const zd=ZT[zona]||{min:0,max:0};
+    const fc=canoneConFascia(zd,m,sottofascia,maggArredo,maggDurata);
+    setRis(calcola({rendita:r,valoreImmobile:vi,mq:m,zona,canoneAnnuo:cm*12,canoneConc:fc.canoneMax,
+      condoMese:form.co?parseFloat(form.co):0,manuAnno:form.mn?parseFloat(form.mn):0}));
+    setStep(6);
+  };
+
+  const reset=()=>{
+    setStep(0);setAddr("");setGeoResult(null);setZona(null);setGeoMethod(null);
+    setMq("");setStato("normale");setS2err("");
+    setForm({r:"",vi:"",cm:"",co:"",mn:""});setS3err("");
+    setAttivi([2,4]);setMaggArredo("no");setMaggDurata("3");
+    setRis(null);setFiscalTab("ced");setIrpefScag(0);
+  };
+
+  const periodi=[1,3,5];
+  const getV=(sc,n)=>{
+    if(!ris) return 0;
+    if(sc==="sfitta") return ris.sfitta[n];
+    if(fiscalTab==="ced") return ris[sc][n].netto;
+    const map={conc:"concIrpef",lib:"libIrpef",ers:"ersIrpef"};
+    return ris[map[sc]][irpefScag][`n${n}`];
+  };
+  const maxAbs=useMemo(()=>ris?Math.max(1,...["sfitta","conc","lib","ers"].flatMap(s=>periodi.map(p=>Math.abs(getV(s,p))))):1,[ris,fiscalTab,irpefScag]);
+  const isBest=(sc,n)=>{if(!ris||sc==="sfitta") return false;return getV(sc,n)===Math.max(...["conc","lib","ers"].map(s=>getV(s,n)));};
+  const bw=v=>Math.max(3,Math.abs(v)/maxAbs*100);
+
+  const zd=zona?ZT[zona]:null;
+  const addrShort=geoResult?[(geoResult.address?.road||""),(geoResult.address?.suburb||geoResult.address?.quarter||geoResult.address?.village||"")].filter(Boolean).join(", "):"";
+  const scenari=[
+    {id:"sfitta",tag:"t-s",n:"A",titolo:"Casa sfitta",sub:"IMU ordinaria +10% · TARI a carico proprietario"},
+    {id:"ers",tag:"t-e",n:"B",titolo:"Canone moderato ERS",sub:ris?`Canone ERS: ${fEur(ris.canoneERS/12)}/mese · Ced. 10% · IMU -25%`:"ARTE Liguria - stima -25% su concordato max"},
+    {id:"conc",tag:"t-c",n:"C",titolo:"Canone concordato 3+2",sub:ris?`${sottofascia}a sottofascia · ${fEur(ris.conc[1].c/12)}/mese · Ced. 10% · IMU -25%`:"Cedolare secca 10% · IMU -25%"},
+    {id:"lib",tag:"t-l",n:"D",titolo:"Libero mercato 4+4",sub:"Cedolare secca 21% · IMU ordinaria · Canone da te proposto"},
+  ];
+
+  return(
+    <div style={{display:"flex",minHeight:"100vh"}}>
+
+      {step>0&&<Sidebar step={step}/>}
+
+      <div className={step===0?"main main-centered":"main"}>
+
+        {/* ── STEP 0 ── */}
+        {step===0&&(
+          <div style={{width:"100%",maxWidth:680}}>
+            <div className="page-header" style={{marginBottom:"1.5rem"}}>
+              <h1>SIMULATORE LOCAZIONE A GENOVA</h1>
             </div>
-
-            {zona && !mostraAll && (
-              <div className="zona-ok">
-                <h3>✅ Zona OMI rilevata</h3>
-                <div className="zona-code">{zona}</div>
-                {OMI_DESC[zona] && <div style={{fontSize:".85rem",color:"var(--navy)",fontWeight:600,marginTop:3}}>{OMI_DESC[zona]}</div>}
-                {ZONA_MADRE[zona] && (
-                  <div className="warn" style={{marginTop:".6rem",marginBottom:0}}>
-                    ⚠️ Sottozona non presente nel dataset geometrico — basato sulla zona madre <strong>{ZONA_MADRE[zona]}</strong>.
-                  </div>
-                )}
-                <div className="zona-range">Fascia canone concordato: {fEur(zd?.min||0)}/mq/anno – {fEur(zd?.max||0)}/mq/anno</div>
-                <div className="zona-actions">
-                  <div className="nav-btns">
-                    <button className="btn-back" onClick={()=>setStep(0)}>← Indietro</button>
-                    <div style={{display:"flex",gap:8}}>
-                      <button className="btn btn-outline btn-sm" onClick={()=>setMostraAll(true)}>✏️ Cambia zona</button>
-                      <button className="btn-next" onClick={confermZona}>Conferma →</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {(!zona||mostraAll) && (
-              <div style={{marginTop:"1rem"}}>
-                {!zona && <div className="err" style={{marginBottom:"1rem"}}>⚠️ Indirizzo fuori dai poligoni OMI. Seleziona la zona manualmente.</div>}
-                {mostraAll && <div style={{fontSize:".82rem",fontWeight:600,marginBottom:".5rem",color:"var(--navy)"}}>Seleziona la zona dall'Allegato 2:</div>}
-                <div className="mgrid">
-                  {Object.keys(ZT).map(z=>(
-                    <button key={z} className={`zbtn ${zona===z?"sel":""}`} onClick={()=>setZona(z)}>
-                      {z}<span className="zr">{fEur(ZT[z].min)}–{fEur(ZT[z].max)}</span>
-                    </button>
-                  ))}
-                </div>
-                {zona && <div className="nav-btns" style={{marginTop:"1rem"}}><button className="btn-back" onClick={()=>setStep(0)}>← Indietro</button><button className="btn-next" onClick={confermZona}>Conferma {zona} →</button></div>}
-              </div>
-            )}
-          </>)}
-        </div>
-      )}
-
-      {/* ─── STEP 2: SUPERFICIE + STATO CONSERVATIVO ─── */}
-      {step===2 && (
-        <div className="card">
-          <div className="stitle">📐 Superficie e stato dell'immobile</div>
-          <p style={{fontSize:".85rem",color:"var(--muted)",lineHeight:1.6,marginBottom:"1.25rem",paddingBottom:"1rem",borderBottom:"1px solid var(--border)"}}>Indica la superficie utile e le condizioni generali dell’immobile. Questi dati permettono di stimare valore di mercato e canone tramite le quotazioni OMI ufficiali.</p>
-
-          {step===2 && (<>
-            <div className="fgrid" style={{marginBottom:"1.25rem"}}>
-              <div className="field">
-                <label>Superficie utile (mq) *</label>
-                <input type="number" min="0" placeholder="es. 75" value={mq}
-                  onChange={e=>{setMq(e.target.value); setForm(f=>({...f,vi:"",cm:""}));}} />
-                <span className="hint">Da visura catastale o APE</span>
-              </div>
+            <div className="content-box" style={{marginBottom:"1.5rem"}}>
+              <p className="bold">Scopri quanto vale affittare il tuo immobile a Genova</p>
+              <p>Questo simulatore confronta 4 scenari — casa sfitta, canone concordato, libero mercato e ERS — calcolando il netto su 1, 3 e 5 anni con IMU 2026, TARI reale e regime fiscale a scelta.</p>
             </div>
-
-            <div className="sec-hdr">Stato conservativo</div>
-            <div className="magg-grid">
-              {Object.entries(STATO_LABELS).map(([k,{label,icon,desc}])=>(
-                <button key={k} className={`magg-item ${stato===k?"on":""}`} onClick={()=>{setStato(k);setForm(f=>({...f,vi:"",cm:""}));}}>
-                  <div className="mt">{icon} {label}</div>
-                  <div className="ms">{desc}</div>
-                </button>
-              ))}
+            <div className="content-box" style={{marginBottom:"2rem"}}>
+              <p>Come funziona in 5 passi: indirizzo → zona OMI → superficie e stato → dati economici → caratteristiche → risultati in pochi secondi.</p>
+              <p style={{marginTop:".75rem",fontSize:".8rem",color:"rgba(255,255,255,.6)"}}>Strumento orientativo. Per la certificazione ufficiale del canone concordato è obbligatoria l'assistenza di un'associazione firmataria dell'accordo territoriale.</p>
             </div>
-
-            {/* Anteprima OMI */}
-            {omiSug && parseFloat(mq)>0 && (
-              <div className="info-box" style={{marginTop:"1rem",fontSize:".82rem",lineHeight:1.8}}>
-                <strong>📊 Stima OMI — AdE 2° sem. 2025 · {STATO_LABELS[stato].label}</strong><br/>
-                Valore di mercato stimato: <strong>{fEur(omiSug.vi)}</strong> ({omiSug.aqUnit.toLocaleString("it-IT")} €/mq)<br/>
-                Canone di mercato stimato: <strong>{fEur(omiSug.cm)}/mese</strong> ({omiSug.lcUnit} €/mq/anno)<br/>
-                <span style={{fontSize:".72rem",color:"var(--muted)"}}>Questi valori saranno precompilati nel prossimo step — modificabili liberamente</span>
-              </div>
-            )}
-            {zona && !OMI_VALORI[zona] && parseFloat(mq)>0 && (
-              <div className="warn" style={{marginTop:"1rem",fontSize:".82rem"}}>
-                ⚠️ Nessun dato OMI disponibile per la zona {zona} — inserisci i valori manualmente nel prossimo step.
-              </div>
-            )}
-
-            {s2err && <div className="err">⚠️ {s2err}</div>}
-            <div className="nav-btns"><button className="btn-back" onClick={()=>setStep(1)}>← Indietro</button><button className="btn-next" onClick={vaiStep3}>Continua →</button></div>
-          </>)}
-        </div>
-      )}
-
-      {/* ─── STEP 3: DATI ECONOMICI ─── */}
-      {(step===3||step===6) && (
-        <div className="card">
-          <div className="stitle">💶 Dati economici</div>
-          <div className="zbar" style={{marginBottom:"1rem"}}>
-            <span>📍 {addrShort} · Zona <strong>{zona}</strong>{OMI_DESC[zona]?` – ${OMI_DESC[zona]}`:""} · {mq} mq · {STATO_LABELS[stato].icon} {STATO_LABELS[stato].label}</span>
-            <button className="rlink" onClick={()=>setStep(2)}>Modifica</button>
-          </div>
-          <p style={{fontSize:".85rem",color:"var(--muted)",lineHeight:1.6,marginBottom:"1.25rem",paddingBottom:"1rem",borderBottom:"1px solid var(--border)"}}>Verifica o correggi i valori precompilati. La rendita catastale serve per il calcolo preciso dell’IMU — se non disponibile inserisci almeno il valore di mercato.</p>
-
-          {(step===3||step===6) && (<>
-            {omiSug && (
-              <div className="info-box" style={{marginBottom:"1rem",fontSize:".82rem",lineHeight:1.6}}>
-                📊 I valori qui sotto sono stimati dalle tabelle OMI ufficiali (AdE 2025) per la tua zona. Modificali se conosci i dati reali del tuo immobile.
-              </div>
-            )}
-            <div className="fgrid">
-              <div className="field">
-                <label>Rendita catastale (€/anno) <span style={{fontWeight:400,color:"var(--muted)",fontSize:".65rem",textTransform:"none",letterSpacing:0}}>— opzionale</span></label>
-                <input type="number" min="0" placeholder="" value={form.r} onChange={e=>fa("r",e.target.value)} />
-                <span className="hint">Serve per il calcolo preciso dell'IMU. Puoi trovarla nella visura catastale.</span>
-              </div>
-              <div className="field">
-                <label>Valore di mercato (€)</label>
-                <input type="number" min="0" placeholder="" value={form.vi} onChange={e=>fa("vi",e.target.value)} />
-                <span className="hint">Stimato dalle tabelle OMI — modificalo se conosci il valore reale.</span>
-              </div>
-              <div className="field">
-                <label>Canone mensile desiderato (€) *</label>
-                <input type="number" min="0" placeholder="" value={form.cm} onChange={e=>fa("cm",e.target.value)} />
-                <span className="hint">Stimato dalle tabelle OMI — usato per lo scenario libero mercato.</span>
-              </div>
-              <div className="field">
-                <label>Spese condominiali ordinarie (€/mese)</label>
-                <input type="number" min="0" placeholder="" value={form.co} onChange={e=>fa("co",e.target.value)} />
-                <span className="hint">Lascia vuoto per usare la stima automatica (€50/mese)</span>
-              </div>
-              <div className="field">
-                <label>Manutenzione ordinaria (€/anno)</label>
-                <input type="number" min="0" placeholder="" value={form.mn} onChange={e=>fa("mn",e.target.value)} />
-                <span className="hint">Lascia vuoto per la stima automatica</span>
-              </div>
-            </div>
-            {s3err && <div className="err">⚠️ {s3err}</div>}
-            <div className="nav-btns"><button className="btn-back" onClick={()=>setStep(2)}>← Indietro</button><button className="btn-next" onClick={vaiStep4}>Continua →</button></div>
-          </>)}
-          {step===6 && (
-            <button className="btn btn-gold" style={{marginTop:"1.25rem"}} onClick={calcRes}>↻ Ricalcola risultati</button>
-          )}
-        </div>
-      )}
-
-      {/* ─── STEP 4: CARATTERISTICHE ─── */}
-      {(step===4||step===6) && (
-        <div className="card">
-          <div className="stitle">✨ Caratteristiche dell'immobile</div>
-          <p style={{fontSize:".85rem",color:"var(--muted)",lineHeight:1.6,marginBottom:"1.25rem",paddingBottom:"1rem",borderBottom:"1px solid var(--border)"}}>Seleziona gli elementi presenti secondo l’Allegato 4 dell’accordo territoriale. Determinano la sottofascia del canone concordato.</p>
-          {step>4 && (
-            <div className="zbar">
-              <span>{attivi.length} elementi attivi · {sottofascia}ª sottofascia</span>
-              {step<6 && <button className="rlink" onClick={()=>setStep(4)}>Modifica</button>}
-            </div>
-          )}
-          {step===4 && (<>
-            <div className="zbar">
-              <span>Seleziona gli elementi presenti · <strong style={{color:"#1a5c2a"}}>② ④</strong> obbligatori già attivi</span>
-            </div>
-            <div className="pill-grid">
-              {ELEMENTI.map(el=>{
-                const isOn=attivi.includes(el.id);
-                return(
-                  <button key={el.id} className={`pill ${isOn?"on":""}`} title={el.desc} onClick={()=>togglePill(el.id)}>
-                    <span className="pill-icon">{el.icon}</span>{el.label}
-                    {el.obbl && <span style={{fontSize:".6rem",opacity:.7,marginLeft:2}}>●</span>}
-                  </button>
-                );
-              })}
-            </div>
-            <div className="sf-box">
-              <div className="sf-num">{sottofascia}ª</div>
-              <div className="sf-label">
-                <strong>
-                  {sottofascia===1&&"Sottofascia bassa (1–2 elementi)"}
-                  {sottofascia===2&&"Sottofascia media (3–8 elementi)"}
-                  {sottofascia===3&&"Sottofascia alta (9+ elementi)"}
-                </strong>
-                {attivi.length} elementi attivi su 21 ·{" "}
-                {fasciaCalc&&<span>Range: <strong>{fEur(fasciaCalc.canoneMin/12)}/mese – {fEur(fasciaCalc.canoneMax/12)}/mese</strong></span>}
-              </div>
-            </div>
-            <div className="nav-btns"><button className="btn-back" onClick={()=>setStep(3)}>← Indietro</button><button className="btn-next" onClick={()=>setStep(5)}>Continua →</button></div>
-          </>)}
-        </div>
-      )}
-
-      {/* ─── STEP 5: MAGGIORAZIONI ─── */}
-      {(step===5||step===6) && (
-        <div className="card">
-          <div className="stitle">📋 Maggiorazioni cumulative</div>
-          <p style={{fontSize:".85rem",color:"var(--muted)",lineHeight:1.6,marginBottom:"1.25rem",paddingBottom:"1rem",borderBottom:"1px solid var(--border)"}}>Indica se l’immobile è arredato e la durata del contratto concordato. Queste maggiorazioni si applicano al canone concordato secondo il Titolo A dell’accordo.</p>
-          {step>5 && (
-            <div className="zbar">
-              <span>Arredo: {maggArredo==="no"?"Nessuno":maggArredo==="parziale"?"Parziale":"Completo"} · Durata: {maggDurata}+2 anni{fasciaCalc?` · Canone max: ${fEur(fasciaCalc.canoneMax/12)}/mese`:""}</span>
-              {step<6 && <button className="rlink" onClick={()=>setStep(5)}>Modifica</button>}
-            </div>
-          )}
-          <div className="sec-hdr">Arredo (Titolo A art. 3)</div>
-          <div className="magg-grid">
-            {[{v:"no",label:"Non arredato",sub:"Nessuna maggiorazione",perc:"+0%"},
-              {v:"parziale",label:"Parz. arredato",sub:"Cucina + metà vani",perc:"+6%"},
-              {v:"completo",label:"Completamente arredato",sub:"Tutti i vani con mobilio",perc:"+12%"}
-            ].map(o=>(
-              <button key={o.v} className={`magg-item ${maggArredo===o.v?"on":""}`} onClick={()=>setMaggArredo(o.v)}>
-                <div className="mt">{o.label}</div><div className="ms">{o.sub}</div><div className="mp">{o.perc}</div>
-              </button>
-            ))}
-          </div>
-          <div className="sec-hdr" style={{marginTop:"1rem"}}>Durata contratto concordato (Titolo A art. 4)</div>
-          <div className="magg-grid-4">
-            {[{v:"3",label:"3+2",sub:"Standard",perc:"+0%"},
-              {v:"4",label:"4+2",sub:"+2%",perc:"+2%"},
-              {v:"5",label:"5+2",sub:"+4%",perc:"+4%"},
-              {v:"6",label:"6+2",sub:"+6%",perc:"+6%"}
-            ].map(o=>(
-              <button key={o.v} className={`magg-item ${maggDurata===o.v?"on":""}`} onClick={()=>setMaggDurata(o.v)}>
-                <div className="mt">{o.label}</div><div className="ms">{o.sub}</div><div className="mp">{o.perc}</div>
-              </button>
-            ))}
-          </div>
-          {fasciaCalc&&(maggArredo!=="no"||maggDurata!=="3")&&(
-            <div style={{marginTop:"1rem",background:"#fff8e8",border:"1px solid #e8d08a",borderRadius:6,padding:".75rem 1rem",fontSize:".8rem",lineHeight:1.7}}>
-              <strong>Maggiorazione totale: +{Math.round(fasciaCalc.totPerc*100)}%</strong>
-              {fasciaCalc.percArredo>0&&<span> (arredo +{Math.round(fasciaCalc.percArredo*100)}%)</span>}
-              {fasciaCalc.percDurata>0&&<span> + durata +{Math.round(fasciaCalc.percDurata*100)}%</span>}
-              {fasciaCalc&&<span> → Canone max concordato: <strong>{fEur(fasciaCalc.canoneMax/12)}/mese</strong></span>}
-            </div>
-          )}
-          {step===5&&(
-            <div className="nav-btns"><button className="btn-back" onClick={()=>setStep(4)}>← Indietro</button><button className="btn-calcola" onClick={calcRes}>🔍 Confronta gli scenari</button></div>
-          )}
-        </div>
-      )}
-
-      {/* ─── STEP 6: RISULTATI ─── */}
-      {step===6&&ris&&(<>
-        <div ref={risRef}></div>
-        <div style={{textAlign:"center",marginBottom:"1.5rem"}}>
-          <div style={{fontSize:"1.4rem",fontWeight:900,color:"var(--navy)",fontFamily:"'Nunito',sans-serif"}}>📊 I tuoi risultati</div>
-          <div style={{fontSize:".82rem",color:"var(--muted)",marginTop:".25rem"}}>{addrShort&&<span>📍 {addrShort} · </span>}Zona <strong>{zona}</strong> · {mq} mq · {STATO_LABELS[stato]?.label}</div>
-        </div>
-        {ris.renditaStimata&&(
-          <div style={{background:"#fdf0f2",border:"2px solid #f0b8c0",borderRadius:6,padding:"1rem 1.25rem",marginBottom:"1.5rem",lineHeight:1.6}}>
-            <div style={{fontWeight:700,color:"var(--red)",marginBottom:".35rem",fontSize:".9rem"}}>⚠️ Il valore dell'IMU nei risultati potrebbe non essere preciso</div>
-            <div style={{fontSize:".82rem",color:"var(--text)"}}>La rendita catastale non è stata inserita: è stata stimata dal valore di mercato (rendita stimata: <strong>{fEur(ris.renditaEff)}/anno</strong>). Per un calcolo esatto torna ai dati, inserisci la rendita dalla visura catastale e ricalcola.</div>
+            <button className="btn-start" onClick={()=>setStep(1)}>INIZIA LA SIMULAZIONE</button>
           </div>
         )}
 
-        {/* REGIME FISCALE */}
-        <div style={{marginBottom:"1.5rem"}}>
-          <div style={{fontSize:".78rem",fontWeight:700,textTransform:"uppercase",letterSpacing:".08em",color:"var(--muted)",marginBottom:".6rem"}}>Regime fiscale</div>
-          <div className="fiscal-tabs">
-            <button className={`fiscal-tab ${fiscalTab==="ced"?"on":""}`} onClick={()=>setFiscalTab("ced")}>Cedolare secca</button>
-            <button className={`fiscal-tab ${fiscalTab==="irpef"?"on":""}`} onClick={()=>setFiscalTab("irpef")}>IRPEF ordinaria</button>
+        {/* ── STEP 1: INDIRIZZO ── */}
+        {step===1&&(
+          <div>
+            <div className="page-header">
+              <h2>INSERISCI L'INDIRIZZO DEL TUO APPARTAMENTO E CERCA</h2>
+            </div>
+            <div style={{marginBottom:"1.25rem"}}>
+              <input className="ainput" type="text"
+                placeholder="es. Via Balbi 4, Corso Buenos Aires 10..."
+                value={addr} onChange={e=>setAddr(e.target.value)}
+                onKeyDown={e=>e.key==="Enter"&&!loading&&cerca()}/>
+            </div>
+            <div style={{textAlign:"center",marginBottom:"1.5rem"}}>
+              <button className="btn-cerca" onClick={cerca} disabled={loading||!addr.trim()}>
+                {loading?"⏳ Ricerca in corso...":"CERCA"}
+              </button>
+            </div>
+            {geoErr&&<div className="err">⚠️ {geoErr}</div>}
+            {geoResult&&(<>
+              {zona&&!mostraAll&&(
+                <div className="geo-result">
+                  <div style={{fontSize:".8rem",color:"rgba(255,255,255,.6)",marginBottom:".5rem"}}>
+                    📍 {geoResult.display_name?.split(",").slice(0,3).join(", ")}
+                    {geoMethod==="exact"&&<span className="geo-method geo-exact" style={{marginLeft:8}}>✓ Zona rilevata</span>}
+                  </div>
+                  <h3>ZONA OMI INDIVIDUATA:</h3>
+                  <div className="zona-code">{typeof OMI_DESC!=="undefined"&&OMI_DESC[zona]?`${OMI_DESC[zona]} — `:""}{zona}</div>
+                  {ZONA_MADRE[zona]&&<div style={{fontSize:".78rem",color:"rgba(255,255,255,.6)",marginTop:".4rem"}}>⚠️ Sottozona — zona madre: {ZONA_MADRE[zona]}</div>}
+                  <div style={{fontSize:".82rem",color:"rgba(255,255,255,.65)",marginTop:".5rem"}}>Fascia: {fEur(zd?.min||0)} – {fEur(zd?.max||0)} /mq/anno</div>
+                  <div className="nav-row" style={{justifyContent:"center",marginTop:"1.25rem"}}>
+                    <button className="btn-nav" onClick={()=>setMostraAll(true)}>modifica</button>
+                    <button className="btn-nav" onClick={confermZona}>conferma</button>
+                  </div>
+                </div>
+              )}
+              {(!zona||mostraAll)&&(
+                <div>
+                  {!zona&&<div className="err" style={{marginBottom:"1rem"}}>⚠️ Indirizzo fuori dai poligoni OMI. Seleziona la zona manualmente.</div>}
+                  {mostraAll&&<div style={{fontSize:".85rem",fontWeight:700,marginBottom:".5rem"}}>Seleziona la zona dall'Allegato 2:</div>}
+                  <div className="mgrid">
+                    {Object.keys(ZT).map(z=>(
+                      <button key={z} className={`zbtn ${zona===z?"sel":""}`} onClick={()=>setZona(z)}>
+                        {z}<span className="zr">{fEur(ZT[z].min)}–{fEur(ZT[z].max)}</span>
+                      </button>
+                    ))}
+                  </div>
+                  {zona&&<div className="nav-row">
+                    <button className="btn-nav" onClick={()=>setMostraAll(false)}>← Annulla</button>
+                    <button className="btn-nav" onClick={confermZona}>Conferma {zona} →</button>
+                  </div>}
+                </div>
+              )}
+            </>)}
+            {!geoResult&&<div className="nav-row"><button className="btn-nav" onClick={()=>setStep(0)}>← Indietro</button><div/></div>}
           </div>
-          <div className="fiscal-section">
-            {fiscalTab==="ced"&&(
-              <div style={{fontSize:".82rem",lineHeight:1.6}}>
-                <strong>Cedolare secca:</strong> aliquota fissa · nessun aggiornamento ISTAT del canone.<br/>
-                Concordato/ERS: 10% · Libero mercato: 21%
+        )}
+
+        {/* ── STEP 2: SUPERFICIE ── */}
+        {step===2&&(
+          <div>
+            <div className="page-header">
+              <h2>Superficie e stato dell'immobile</h2>
+              <p>Indica la superficie utile e le condizioni generali dell'immobile. Questi dati permettono di stimare valore di mercato e canone tramite le quotazioni OMI ufficiali.</p>
+            </div>
+            <div style={{marginBottom:"1.5rem"}}>
+              <label className="field-label">Superficie abitabile (mq)</label>
+              <div className="field-sep"/>
+              <input className="ainput" type="number" min="0" placeholder="es. 75"
+                value={mq} onChange={e=>{setMq(e.target.value);setForm(f=>({...f,vi:"",cm:""}));}}/>
+              {omiSug&&parseFloat(mq)>0&&(
+                <div className="info-box">📊 OMI {STATO_LABELS[stato].label}: valore ~{fEur(omiSug.vi)} · canone ~{fEur(omiSug.cm)}/mese</div>
+              )}
+            </div>
+            <label className="field-label">Stato conservativo</label>
+            <div className="field-sep"/>
+            <div className="opt-grid">
+              {Object.entries(STATO_LABELS).map(([k,{label,icon,desc}])=>(
+                <button key={k} className={`opt-card ${stato===k?"sel":""}`}
+                  onClick={()=>{setStato(k);setForm(f=>({...f,vi:"",cm:""}));}}>
+                  <div className="opt-icon">{icon}</div>
+                  <div className="opt-title">{label}</div>
+                  <div className="opt-sub">{desc}</div>
+                </button>
+              ))}
+            </div>
+            {s2err&&<div className="err">⚠️ {s2err}</div>}
+            <div className="nav-row">
+              <button className="btn-nav" onClick={()=>setStep(1)}>← Indietro</button>
+              <button className="btn-nav" onClick={vaiStep3}>Avanti →</button>
+            </div>
+          </div>
+        )}
+
+        {/* ── STEP 3: DATI ECONOMICI ── */}
+        {(step===3||step===6)&&(
+          <div>
+            {step===3&&(<>
+              <div className="page-header">
+                <h2>Dati Economici</h2>
+                <p>Inserisci i valori · La rendita catastale non è obbligatoria · Valore e Affitto sono liberamente modificabili</p>
+              </div>
+              <div className="zbar">
+                <span>📍 {addrShort} · Zona <strong>{zona}</strong>{typeof OMI_DESC!=="undefined"&&OMI_DESC[zona]?` – ${OMI_DESC[zona]}`:""} · {mq} mq · {STATO_LABELS[stato].icon} {STATO_LABELS[stato].label}</span>
+                <button className="rlink" onClick={()=>setStep(2)}>Modifica</button>
+              </div>
+              {omiSug&&<div className="info-box" style={{marginBottom:"1.25rem"}}>📊 Valori stimati dalle tabelle OMI ufficiali (AdE 2025). Modificali se conosci i dati reali.</div>}
+            </>)}
+            <div className="fgrid">
+              <div className="field">
+                <label>Valore di Mercato (€)</label>
+                <input type="number" min="0" value={form.vi} onChange={e=>fa("vi",e.target.value)}/>
+                <span className="hint">Stimato dalle tabelle OMI — modificalo se conosci il valore reale.</span>
+              </div>
+              <div className="field">
+                <label>Affitto desiderato (€/mese) *</label>
+                <input type="number" min="0" value={form.cm} onChange={e=>fa("cm",e.target.value)}/>
+                <span className="hint">Usato per lo scenario libero mercato.</span>
+              </div>
+              <div className="field">
+                <label>Rendita catastale (OPZIONALE)</label>
+                <input type="number" min="0" value={form.r} onChange={e=>fa("r",e.target.value)}/>
+                <span className="hint">Serve per il calcolo preciso dell'IMU.</span>
+              </div>
+              <div className="field">
+                <label>Spese di amministrazione (€/mese)</label>
+                <input type="number" min="0" value={form.co} onChange={e=>fa("co",e.target.value)}/>
+                <span className="hint">Lascia vuoto per la stima automatica (€50/mese)</span>
+              </div>
+              <div className="field">
+                <label>Manutenzione ordinaria (€/anno)</label>
+                <input type="number" min="0" value={form.mn} onChange={e=>fa("mn",e.target.value)}/>
+                <span className="hint">Lascia vuoto per la stima automatica</span>
+              </div>
+            </div>
+            {s3err&&<div className="err">⚠️ {s3err}</div>}
+            {step===3&&<div className="nav-row"><button className="btn-nav" onClick={()=>setStep(2)}>← Indietro</button><button className="btn-nav" onClick={vaiStep4}>Avanti →</button></div>}
+            {step===6&&<div style={{marginTop:"1.25rem"}}><button className="btn-calcola" onClick={calcRes}>↻ Ricalcola risultati</button></div>}
+          </div>
+        )}
+
+        {/* ── STEP 4: CARATTERISTICHE ── */}
+        {(step===4||step===6)&&(
+          <div>
+            {step===4&&(
+              <div className="page-header">
+                <h2>Caratteristiche dell'immobile</h2>
+                <p>Seleziona gli elementi presenti secondo l'Allegato 4 dell'accordo territoriale. Determinano la sottofascia del canone concordato.</p>
               </div>
             )}
-            {fiscalTab==="irpef"&&(<>
-              <div style={{fontSize:".82rem",marginBottom:".75rem",lineHeight:1.6}}>
-                <strong>IRPEF ordinaria</strong> — base imponibile = canone × 95%.
-                Con IRPEF è possibile aggiornare il canone +75% ISTAT/anno (non simulato).
-                <br/><strong style={{color:"var(--red)"}}>IMU senza riduzione: con IRPEF non si applica il –25% IMU del canone concordato.</strong>
+            {step>4&&<div className="zbar"><span>{attivi.length} elementi attivi · {sottofascia}a sottofascia</span>{step<6&&<button className="rlink" onClick={()=>setStep(4)}>Modifica</button>}</div>}
+            {step===4&&(<>
+              <label className="field-label">Seleziona le caratteristiche dell'immobile</label>
+              <div className="field-sep"/>
+              <div className="pill-grid">
+                {ELEMENTI.map(el=>{
+                  const isOn=attivi.includes(el.id);
+                  return(<button key={el.id} className={`pill ${isOn?"on":""}`} title={el.desc} onClick={()=>togglePill(el.id)}>
+                    <span>{el.icon}</span>{el.label}{el.obbl&&<span style={{fontSize:".6rem",opacity:.6}}>●</span>}
+                  </button>);
+                })}
               </div>
-              <div style={{fontSize:".75rem",fontWeight:700,marginBottom:".4rem",color:"var(--muted)"}}>Scaglione marginale IRPEF:</div>
-              <div className="irpef-grid">
-                {IRPEF_SCAGLIONI.map((s,i)=>(
-                  <button key={i} style={{cursor:"pointer",border:irpefScag===i?"2px solid var(--navy)":"1px solid var(--border)",background:irpefScag===i?"var(--navy)":"var(--bg)",borderRadius:4,padding:".6rem .8rem",textAlign:"left"}}
-                    onClick={()=>setIrpefScag(i)}>
-                    <div style={{fontWeight:700,fontSize:".75rem",color:irpefScag===i?"#fff":"var(--navy)"}}>{s.label}</div>
-                    <div style={{fontSize:".67rem",color:irpefScag===i?"rgba(255,255,255,.7)":"var(--muted)",marginTop:2}}>{s.desc}</div>
-                  </button>
-                ))}
+              <div className="sf-box">
+                <div className="sf-num">{sottofascia}ª</div>
+                <div className="sf-label">
+                  <strong>{sottofascia===1&&"Sottofascia bassa (1–2 elementi)"}{sottofascia===2&&"Sottofascia media (3–8 elementi)"}{sottofascia===3&&"Sottofascia alta (9+ elementi)"}</strong>
+                  {attivi.length} elementi su 21{fasciaCalc&&<span> · Range: <strong style={{color:"var(--yellow)"}}>{fEur(fasciaCalc.canoneMin/12)}/mese – {fEur(fasciaCalc.canoneMax/12)}/mese</strong></span>}
+                </div>
+              </div>
+              <div className="nav-row">
+                <button className="btn-nav" onClick={()=>setStep(3)}>← Indietro</button>
+                <button className="btn-nav" onClick={()=>setStep(5)}>Avanti →</button>
               </div>
             </>)}
           </div>
-        </div>
+        )}
 
-        {/* CARD SCENARI */}
-        <div className="stitle">📊 Risultati per scenario</div>
-
-        {/* ── RIGA SFITTA: card dati + scheda informativa ─────────────── */}
-        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"1rem",marginBottom:"1rem"}}>
-          {(()=>{const id="sfitta",sc=scenari.find(s=>s.id===id);return(
-            <div className={`scard ${isBest(id,5)?"scard-best":""}`}>
-              <div className="ch2">
-                <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",flexWrap:"wrap",gap:4}}>
-                  <span className="ctag t-s">Scenario A</span>
-                  {isBest(id,5)&&<span className="best-badge">✓ Migliore su 5 anni</span>}
+        {/* ── STEP 5: MAGGIORAZIONI ── */}
+        {(step===5||step===6)&&(
+          <div>
+            {step===5&&(
+              <div className="page-header">
+                <h2>Maggiorazioni cumulative</h2>
+                <p>Indica se l'immobile è arredato e la durata del contratto concordato. Queste maggiorazioni si applicano al canone concordato secondo il Titolo A dell'accordo.</p>
+              </div>
+            )}
+            {step>5&&<div className="zbar"><span>Arredo: {maggArredo==="no"?"Nessuno":maggArredo==="parziale"?"Parziale":"Completo"} · Durata: {maggDurata}+2 anni{fasciaCalc?` · Canone max: ${fEur(fasciaCalc.canoneMax/12)}/mese`:""}</span>{step<6&&<button className="rlink" onClick={()=>setStep(5)}>Modifica</button>}</div>}
+            {step===5&&(<>
+              <label className="field-label">Arredamento</label>
+              <div className="field-sep"/>
+              <div className="opt-grid" style={{marginBottom:"1.5rem"}}>
+                {[{v:"no",label:"Non arredato",icon:"🚫",perc:"+0%"},{v:"parziale",label:"Parz. arredato",icon:"🛋️",perc:"+6%"},{v:"completo",label:"Completamente arredato",icon:"🏠",perc:"+12%"}].map(o=>(
+                  <button key={o.v} className={`opt-card ${maggArredo===o.v?"sel":""}`} onClick={()=>setMaggArredo(o.v)}>
+                    <div className="opt-icon">{o.icon}</div><div className="opt-title">{o.label}</div><div className="opt-perc">{o.perc}</div>
+                  </button>
+                ))}
+              </div>
+              <label className="field-label">Durata contratto</label>
+              <div className="field-sep"/>
+              <div className="opt-grid">
+                {[{v:"3",label:"3+2 anni",perc:"+0%"},{v:"4",label:"4+2 anni",perc:"+2%"},{v:"5",label:"5+2 anni",perc:"+4%"},{v:"6",label:"6+2 anni",perc:"+6%"}].map(o=>(
+                  <button key={o.v} className={`opt-card ${maggDurata===o.v?"sel":""}`} onClick={()=>setMaggDurata(o.v)}>
+                    <div className="opt-icon">📅</div><div className="opt-title">{o.label}</div><div className="opt-perc">{o.perc}</div>
+                  </button>
+                ))}
+              </div>
+              {fasciaCalc&&(maggArredo!=="no"||maggDurata!=="3")&&(
+                <div className="info-box" style={{marginTop:"1rem"}}>
+                  <strong>Maggiorazione totale: +{Math.round(fasciaCalc.totPerc*100)}%</strong> → Canone max: <strong>{fEur(fasciaCalc.canoneMax/12)}/mese</strong>
                 </div>
-                <h3>{sc.titolo}</h3>
-                <div className="sub">{sc.sub}</div>
+              )}
+              <div className="nav-row">
+                <button className="btn-nav" onClick={()=>setStep(4)}>← Indietro</button>
+                <button className="btn-calcola" onClick={calcRes}>Calcola risultati →</button>
               </div>
-              <div className="cb">
-                {periodi.map(p=>{const v=getV(id,p);return(
-                  <div className="trow" key={p}>
-                    <span className="tl">{p} {p===1?"anno":"anni"}</span>
-                    <span className={`tv ${v<0?"neg":"pos"}`}>{fEur(v,true)}</span>
-                  </div>
-                );})}
-              </div>
-              <div className="cf">{`IMU: ${fEur(ris.imuOrd*1.1)}/anno · TARI: ${fEur(ris.tariSfitta)}/anno`}</div>
+            </>)}
+          </div>
+        )}
+
+        {/* ── STEP 6: RISULTATI ── */}
+        {step===6&&ris&&(<>
+          <div ref={risRef}></div>
+          <div className="results-header">
+            <h1>RISULTATO</h1>
+            <div className="sub">{addrShort&&<span>📍 {addrShort} · </span>}Zona <strong>{zona}</strong> · {mq} mq · {STATO_LABELS[stato]?.label}</div>
+          </div>
+
+          {ris.renditaStimata&&<div className="warn" style={{marginBottom:"1.5rem"}}>⚠️ Rendita catastale non inserita: IMU stimata dal valore di mercato ({fEur(ris.renditaEff)}/anno). Per un calcolo preciso inserisci la rendita dalla visura catastale.</div>}
+
+          {/* REGIME FISCALE */}
+          <div style={{marginBottom:"1.5rem"}}>
+            <div className="stitle">Regime fiscale</div>
+            <div className="fiscal-tabs">
+              <button className={`fiscal-tab ${fiscalTab==="ced"?"on":""}`} onClick={()=>setFiscalTab("ced")}>Cedolare secca</button>
+              <button className={`fiscal-tab ${fiscalTab==="irpef"?"on":""}`} onClick={()=>setFiscalTab("irpef")}>IRPEF ordinaria</button>
             </div>
-          )})()}
-          <div className="scheda scheda-sfitta">
-            <span className="scheda-icon">⚠️</span>
-            <div className="scheda-title">Un rischio crescente</div>
-            <div className="scheda-msg">&ldquo;La casa sfitta non è neutra: è una passività.&rdquo;</div>
-            <div className="scheda-item"><span className="scheda-bullet">▪</span><span>IMU maggiorata +10% ogni anno, interamente a tuo carico</span></div>
-            <div className="scheda-item"><span className="scheda-bullet">▪</span><span>TARI a carico del proprietario: zero entrate, costi certi</span></div>
-            <div className="scheda-item"><span className="scheda-bullet">▪</span><span>Deterioramento accelerato senza manutenzione continuativa</span></div>
-            <div className="scheda-item"><span className="scheda-bullet">▪</span><span>Rischio di occupazione abusiva e difficoltà di recupero</span></div>
-            <div className="scheda-divider"></div>
-            <div className="scheda-stat">
-              <span className="scheda-stat-num">{fEur(getV("sfitta",5),true)}</span>
-              perdita netta stimata a 5 anni
+            <div className="fiscal-section">
+              {fiscalTab==="ced"&&<div style={{fontSize:".85rem",lineHeight:1.6}}><strong>Cedolare secca:</strong> aliquota fissa · nessun aggiornamento ISTAT.<br/>Concordato/ERS: 10% · Libero mercato: 21%</div>}
+              {fiscalTab==="irpef"&&(<>
+                <div style={{fontSize:".85rem",marginBottom:".75rem",lineHeight:1.6}}><strong>IRPEF ordinaria</strong> — base imponibile = canone × 95%.<br/><strong style={{color:"var(--red)"}}>Con IRPEF non si applica il -25% IMU del canone concordato.</strong></div>
+                <div style={{fontSize:".78rem",fontWeight:700,marginBottom:".4rem",color:"var(--muted)"}}>Scaglione marginale IRPEF:</div>
+                <div className="irpef-grid">
+                  {IRPEF_SCAGLIONI.map((s,i)=>(
+                    <button key={i} style={{cursor:"pointer",border:irpefScag===i?"2px solid var(--navy)":"2px solid var(--border)",background:irpefScag===i?"var(--navy)":"white",borderRadius:10,padding:".75rem 1rem",textAlign:"left",transition:"all .2s"}} onClick={()=>setIrpefScag(i)}>
+                      <div style={{fontWeight:700,fontSize:".78rem",color:irpefScag===i?"#fff":"var(--navy)"}}>{s.label}</div>
+                      <div style={{fontSize:".68rem",color:irpefScag===i?"rgba(255,255,255,.7)":"var(--muted)",marginTop:2}}>{s.desc}</div>
+                    </button>
+                  ))}
+                </div>
+              </>)}
             </div>
           </div>
-        </div>
 
-        {/* ── RIGA ERS: card dati + scheda informativa ─────────────────── */}
-        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"1rem",marginBottom:"2rem"}}>
-          {(()=>{const id="ers",sc=scenari.find(s=>s.id===id);return(
-            <div className={`scard ${isBest(id,5)?"scard-best":""}`}>
-              <div className="ch2">
-                <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",flexWrap:"wrap",gap:4}}>
-                  <span className="ctag t-e">Scenario B</span>
-                  {isBest(id,5)&&<span className="best-badge">✓ Migliore su 5 anni</span>}
-                </div>
-                <h3>{sc.titolo}</h3>
-                <div className="sub">{sc.sub}</div>
+          {/* SCENARI */}
+          <div className="stitle">📊 Risultati per scenario</div>
+
+          {/* SFITTA */}
+          <div className="scenario-block">
+            {(()=>{const id="sfitta",sc=scenari.find(s=>s.id===id);return(
+              <div className={`scard ${isBest(id,5)?"scard-best":""}`}>
+                <div className="ch2"><span className="ctag t-s">Scenario A</span>{isBest(id,5)&&<span className="best-badge">✓ Migliore su 5 anni</span>}
+                  <h3>{sc.titolo}</h3><div className="sub">{sc.sub}</div></div>
+                <div className="cb">{periodi.map(p=>{const v=getV(id,p);return(<div className="trow" key={p}><span className="tl">{p} {p===1?"anno":"anni"}</span><span className={`tv ${v<0?"neg":"pos"}`}>{fEur(v,true)}</span></div>);})}</div>
+                <div className="cf">IMU: {fEur(ris.imuOrd*1.1)}/anno · TARI: {fEur(ris.tariSfitta)}/anno</div>
               </div>
-              <div className="cb">
-                <div style={{fontSize:".72rem",background:"#fff3e0",border:"1px solid #f0c88a",borderRadius:3,padding:".4rem .6rem",marginBottom:".5rem",lineHeight:1.5}}>⚠️ <strong>Stima orientativa</strong> — canone ERS = concordato max –25%</div>
-                {periodi.map(p=>{const v=getV(id,p),b=isBest(id,p);return(
-                  <div className="trow" key={p}>
-                    <span className="tl">{p} {p===1?"anno":"anni"}</span>
-                    <span className={`tv ${b?"best":v<0?"neg":"pos"}`}>{fEur(v,true)}{b?" ★":""}</span>
-                  </div>
-                );})}
-              </div>
-              <div className="cf">{`Canone ERS: ${fEur(ris.canoneERS/12)}/mese (–25% su max concordato)`}</div>
-            </div>
-          )})()}
-          <div className="scheda scheda-ers">
-            <span className="scheda-icon">🤝</span>
-            <div className="scheda-title">Stabile, protetto, conveniente</div>
-            <div className="scheda-msg">&ldquo;Meno rischio, più stabilità. Una scelta che tutela anche te.&rdquo;</div>
-            <div className="scheda-item"><span className="scheda-bullet">▪</span><span>Cedolare secca al 10% e IMU ridotta del 25%</span></div>
-            <div className="scheda-item"><span className="scheda-bullet">▪</span><span>Accesso al Fondo di Garanzia FILSE contro la morosità</span></div>
-            <div className="scheda-item"><span className="scheda-bullet">▪</span><span>Microcredito convenzionato tramite l&apos;Agenzia Sociale per la Casa</span></div>
-            <div className="scheda-item"><span className="scheda-bullet">▪</span><span>Accompagnamento nella gestione dell&apos;inquilino</span></div>
-            <div className="scheda-item"><span className="scheda-bullet">▪</span><span>Riduzione del rischio di morosità e turnover</span></div>
-            <div className="scheda-divider"></div>
-            <div className="scheda-stat">
-              <span className="scheda-stat-num">{fEur(getV("ers",5),true)}</span>
-              rendimento netto stimato a 5 anni
-            </div>
-            <div className="scheda-stat" style={{marginTop:".4rem"}}>
-              <span className="scheda-stat-num">{fEur(getV("ers",5)-getV("sfitta",5),true)}</span>
-              vantaggio rispetto alla casa sfitta
+            )})()}
+            <div className="scheda scheda-sfitta">
+              <span className="scheda-icon">⚠️</span>
+              <div className="scheda-title">Un rischio crescente</div>
+              <div className="scheda-msg">"La casa sfitta non è neutra: è una passività."</div>
+              <div className="scheda-item"><span className="scheda-bullet">▪</span><span>IMU maggiorata +10% ogni anno, interamente a tuo carico</span></div>
+              <div className="scheda-item"><span className="scheda-bullet">▪</span><span>TARI a carico del proprietario: zero entrate, costi certi</span></div>
+              <div className="scheda-item"><span className="scheda-bullet">▪</span><span>Deterioramento accelerato senza manutenzione continuativa</span></div>
+              <div className="scheda-divider"></div>
+              <div className="scheda-stat"><span className="scheda-stat-num">{fEur(getV("sfitta",5),true)}</span>perdita netta stimata a 5 anni</div>
             </div>
           </div>
-        </div>
 
-        {/* ── ALTRE SOLUZIONI ───────────────────────────────────────────── */}
-        <div style={{marginBottom:"2rem"}}>
-          <button onClick={()=>setMostraAltri(v=>!v)}
-            style={{display:"flex",alignItems:"center",gap:8,background:"none",border:"1.5px solid var(--border)",borderRadius:4,padding:".65rem 1.1rem",cursor:"pointer",fontFamily:"'Nunito',sans-serif",fontSize:".83rem",fontWeight:600,color:"var(--navy)",width:"100%",justifyContent:"space-between"}}>
-            <span>📋 Altre soluzioni: Canone concordato 3+2 e Libero mercato 4+4</span>
-            <span style={{fontSize:".7rem"}}>{mostraAltri?"▲ Nascondi":"▼ Mostra"}</span>
-          </button>
-          {mostraAltri&&(
-            <div style={{marginTop:"1rem"}}>
-              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"1rem",marginBottom:"1.5rem"}}>
+          {/* ERS */}
+          <div className="scenario-block">
+            {(()=>{const id="ers",sc=scenari.find(s=>s.id===id);return(
+              <div className={`scard ${isBest(id,5)?"scard-best":""}`}>
+                <div className="ch2"><span className="ctag t-e">Scenario B</span>{isBest(id,5)&&<span className="best-badge">✓ Migliore su 5 anni</span>}
+                  <h3>{sc.titolo}</h3><div className="sub">{sc.sub}</div></div>
+                <div className="cb">
+                  <div style={{fontSize:".72rem",background:"#fff3e0",border:"1px solid #f0c88a",borderRadius:6,padding:".4rem .6rem",marginBottom:".5rem",lineHeight:1.5}}>⚠️ <strong>Stima orientativa</strong> — canone ERS = concordato max -25%</div>
+                  {periodi.map(p=>{const v=getV(id,p),b=isBest(id,p);return(<div className="trow" key={p}><span className="tl">{p} {p===1?"anno":"anni"}</span><span className={`tv ${b?"best":v<0?"neg":"pos"}`}>{fEur(v,true)}{b?" ★":""}</span></div>);})}
+                </div>
+                <div className="cf">Canone ERS: {fEur(ris.canoneERS/12)}/mese (-25% su max concordato)</div>
+              </div>
+            )})()}
+            <div className="scheda scheda-ers">
+              <span className="scheda-icon">🤝</span>
+              <div className="scheda-title">Stabile, protetto, conveniente</div>
+              <div className="scheda-msg">"Meno rischio, più stabilità. Una scelta che tutela anche te."</div>
+              <div className="scheda-item"><span className="scheda-bullet">▪</span><span>Cedolare secca al 10% e IMU ridotta del 25%</span></div>
+              <div className="scheda-item"><span className="scheda-bullet">▪</span><span>Accesso al Fondo di Garanzia FILSE contro la morosità</span></div>
+              <div className="scheda-item"><span className="scheda-bullet">▪</span><span>Accompagnamento nella gestione dell'inquilino</span></div>
+              <div className="scheda-divider"></div>
+              <div className="scheda-stat"><span className="scheda-stat-num">{fEur(getV("ers",5),true)}</span>rendimento netto stimato a 5 anni</div>
+              <div className="scheda-stat" style={{marginTop:".4rem"}}><span className="scheda-stat-num">{fEur(getV("ers",5)-getV("sfitta",5),true)}</span>vantaggio rispetto alla casa sfitta</div>
+            </div>
+          </div>
+
+          {/* ALTRI RISULTATI */}
+          <div style={{marginBottom:"2.5rem"}}>
+            <button onClick={()=>setMostraAltri(v=>!v)} style={{display:"flex",alignItems:"center",gap:8,background:"var(--navy)",border:"none",borderRadius:12,padding:"1rem 1.5rem",cursor:"pointer",fontFamily:"'Inter',sans-serif",fontSize:"1rem",fontWeight:700,color:"white",width:"100%",justifyContent:"space-between",marginBottom:"1rem"}}>
+              <span>📋 Altri risultati: Canone concordato 3+2 e Libero mercato 4+4</span>
+              <span>{mostraAltri?"▲ Nascondi":"▼ Mostra"}</span>
+            </button>
+            {mostraAltri&&(
+              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"1.25rem"}}>
                 {["conc","lib"].map(id=>{const sc=scenari.find(s=>s.id===id);return(
                   <div className={`scard ${isBest(id,5)?"scard-best":""}`} key={id}>
-                    <div className="ch2">
-                      <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",flexWrap:"wrap",gap:4}}>
-                        <span className={`ctag ${sc.tag}`}>{sc.n}</span>
-                        {isBest(id,5)&&<span className="best-badge">✓ Migliore su 5 anni</span>}
-                      </div>
-                      <h3>{sc.titolo}</h3>
-                      <div className="sub">{sc.sub}</div>
-                    </div>
+                    <div className="ch2"><span className={`ctag ${sc.tag}`}>{sc.n}</span>{isBest(id,5)&&<span className="best-badge">✓ Migliore su 5 anni</span>}
+                      <h3>{sc.titolo}</h3><div className="sub">{sc.sub}</div></div>
                     <div className="cb">
                       {periodi.map(p=>{const v=getV(id,p),b=isBest(id,p);
                         let dl=null;
                         if(fiscalTab==="irpef"){const vCed=ris[id][p].netto,diff=v-vCed;if(Math.abs(diff)>50)dl=<span className={`delta-badge ${diff>0?"delta-pos":"delta-neg"}`}>{fEur(diff,true)} vs ced.</span>;}
-                        return(
-                        <div className="trow" key={p}>
-                          <span className="tl">{p} {p===1?"anno":"anni"}</span>
-                          <span>
-                            <span className={`tv ${b?"best":v<0?"neg":"pos"}`}>{fEur(v,true)}{b?" ★":""}</span>
-                            {dl&&<span style={{marginLeft:6}}>{dl}</span>}
-                          </span>
-                        </div>
-                      );})}
+                        return(<div className="trow" key={p}><span className="tl">{p} {p===1?"anno":"anni"}</span><span><span className={`tv ${b?"best":v<0?"neg":"pos"}`}>{fEur(v,true)}{b?" ★":""}</span>{dl&&<span style={{marginLeft:6}}>{dl}</span>}</span></div>);
+                      })}
                     </div>
                     <div className="cf">
                       {id==="conc"&&fiscalTab==="ced"&&`Canone: ${fEur(ris.cConc/12)}/mese · Ced.10% · IMU: ${fEur(ris.imuConc)}/anno`}
@@ -1030,100 +1046,69 @@ function App(){
                   </div>
                 );})}
               </div>
-            </div>
-          )}
-        </div>
+            )}
+          </div>
 
-        {/* ── ANALISI APPROFONDITA (tabella + grafico) ─────────────────── */}
-        <div style={{marginBottom:"2rem"}}>
-          <button onClick={()=>setMostraAnalisi(v=>!v)}
-            style={{display:"flex",alignItems:"center",gap:8,background:"none",border:"1.5px solid var(--border)",borderRadius:4,padding:".65rem 1.1rem",cursor:"pointer",fontFamily:"'Nunito',sans-serif",fontSize:".83rem",fontWeight:600,color:"var(--navy)",width:"100%",justifyContent:"space-between"}}>
-            <span>📊 Analisi comparativa dettagliata — tabella e grafico</span>
-            <span style={{fontSize:".7rem"}}>{mostraAnalisi?"▲ Nascondi":"▼ Mostra"}</span>
-          </button>
-          {mostraAnalisi&&(
-            <div style={{marginTop:"1rem"}}>
-              {/* TABELLA */}
-              <div className="stitle" style={{marginTop:0}}>Tabella comparativa</div>
-              <div className="twrap" style={{marginBottom:"1.5rem"}}>
-                <table>
-                  <thead><tr><th>Scenario</th><th>1 anno</th><th>3 anni</th><th>5 anni</th></tr></thead>
-                  <tbody>
-                    {[{id:"sfitta",l:"🏚️ Casa sfitta"},{id:"ers",l:"🏛️ Canone moderato ERS"},
-                      {id:"conc",l:"🤝 Canone concordato 3+2"},{id:"lib",l:"🏘️ Libero mercato 4+4"}].map(({id,l})=>(
-                      <tr key={id}>
-                        <td>{l}
-                          {id==="ers"&&<span className="sub-row">⚠️ stima orientativa</span>}
-                          {id==="conc"&&fiscalTab==="irpef"&&<span className="sub-row">IMU senza riduzione 25%</span>}
-                        </td>
-                        {periodi.map(p=>{const v=getV(id,p),b=isBest(id,p);return(
-                          <td key={p} className={b?"best":v<0?"worst":""}>{fEur(v,true)}{b?" ★":""}</td>
-                        );})}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-              {/* GRAFICO */}
-              <div className="stitle">Visualizzazione grafica</div>
-              <div className="pbtn">
-                {periodi.map(p=><button key={p} className={periodo===p?"a":""} onClick={()=>setPeriodo(p)}>{p} {p===1?"anno":"anni"}</button>)}
-              </div>
-              {[{id:"conc",l:"🤝 Canone concordato",c:"bf-c"},{id:"lib",l:"🏘️ Libero mercato",c:"bf-l"},{id:"ers",l:"🏛️ ERS/moderato ⚠️",c:"bf-e"}].map(({id,l,c})=>{
-                const v=getV(id,periodo);
-                return(<div className="bg" key={id}><div className="bg-label">{l}</div><div className="bt"><div className={`bf ${c}`} style={{width:bw(v)+"%"}}>{fEur(v,true)}</div></div></div>);
-              })}
-              <div style={{borderTop:"1px dashed var(--border)",marginTop:".75rem",paddingTop:"1rem"}}>
-                <div className="bg-label" style={{color:"var(--red)"}}>🏚️ Casa sfitta — costo annuo (valore negativo)</div>
-                <div style={{display:"flex",alignItems:"center",gap:12,marginTop:".35rem"}}>
-                  <div style={{background:"var(--bg2)",borderRadius:3,height:34,flex:1,overflow:"hidden"}}>
-                    <div className="bf bf-s" style={{width:bw(getV("sfitta",periodo))+"%"}}>{fEur(getV("sfitta",periodo),true)}</div>
-                  </div>
+          {/* ANALISI */}
+          <div style={{marginBottom:"2rem"}}>
+            <button onClick={()=>setMostraAnalisi(v=>!v)} style={{display:"flex",alignItems:"center",gap:8,background:"var(--navy)",border:"none",borderRadius:12,padding:"1rem 1.5rem",cursor:"pointer",fontFamily:"'Inter',sans-serif",fontSize:"1rem",fontWeight:700,color:"white",width:"100%",justifyContent:"space-between",marginBottom:"1rem"}}>
+              <span>📊 Analisi comparativa — tabella e grafico</span>
+              <span>{mostraAnalisi?"▲ Nascondi":"▼ Mostra"}</span>
+            </button>
+            {mostraAnalisi&&(
+              <div>
+                <div className="stitle">Tabella comparativa</div>
+                <div className="twrap" style={{marginBottom:"1.5rem"}}>
+                  <table>
+                    <thead><tr><th>Scenario</th><th>1 anno</th><th>3 anni</th><th>5 anni</th></tr></thead>
+                    <tbody>
+                      {[{id:"sfitta",l:"🏚️ Casa sfitta"},{id:"ers",l:"🏛️ Canone moderato ERS"},{id:"conc",l:"🤝 Canone concordato 3+2"},{id:"lib",l:"🏘️ Libero mercato 4+4"}].map(({id,l})=>(
+                        <tr key={id}><td>{l}{id==="ers"&&<span className="sub-row">⚠️ stima orientativa</span>}{id==="conc"&&fiscalTab==="irpef"&&<span className="sub-row">IMU senza riduzione 25%</span>}</td>
+                          {periodi.map(p=>{const v=getV(id,p),b=isBest(id,p);return(<td key={p} className={b?"best":v<0?"worst":""}>{fEur(v,true)}{b?" ★":""}</td>);})}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
-                <div style={{fontSize:".72rem",color:"var(--muted)",marginTop:".3rem"}}>Rappresenta un costo netto — non confrontabile direttamente con gli scenari di affitto</div>
+                <div className="stitle">Grafico comparativo</div>
+                <div className="pbtn">{periodi.map(p=><button key={p} className={periodo===p?"a":""} onClick={()=>setPeriodo(p)}>{p} {p===1?"anno":"anni"}</button>)}</div>
+                {[{id:"conc",l:"🤝 Canone concordato",c:"bf-c"},{id:"lib",l:"🏘️ Libero mercato",c:"bf-l"},{id:"ers",l:"🏛️ ERS/moderato ⚠️",c:"bf-e"}].map(({id,l,c})=>{
+                  const v=getV(id,periodo);
+                  return(<div className="bg" key={id}><div className="bg-label">{l}</div><div className="bt"><div className={`bf ${c}`} style={{width:bw(v)+"%"}}>{fEur(v,true)}</div></div></div>);
+                })}
+                <div style={{borderTop:"2px dashed rgba(30,45,90,.15)",marginTop:".75rem",paddingTop:"1rem"}}>
+                  <div className="bg-label" style={{color:"var(--red)"}}>🏚️ Casa sfitta (costo)</div>
+                  <div className="bt" style={{marginTop:".35rem"}}><div className="bf bf-s" style={{width:bw(getV("sfitta",periodo))+"%"}}>{fEur(getV("sfitta",periodo),true)}</div></div>
+                </div>
               </div>
-            </div>
-          )}
-        </div>
+            )}
+          </div>
 
-        {/* NOTE */}
-        <div className="note" style={{marginTop:"2rem",marginBottom:"1.5rem"}}>
-          <strong>Note metodologiche:</strong>
-          <ul>
-            <li><strong>Zona {zona}:</strong> fascia {fEur(zd?.min||0)}/mq/anno – {fEur(zd?.max||0)}/mq/anno · Allegato 2, Accordo Territoriale Genova 29/05/2025 (in vigore dal 16/06/2025)</li>
-            <li><strong>Stato conservativo:</strong> {STATO_LABELS[stato].label} — usato per calibrare i suggerimenti OMI (non influisce sul canone concordato)</li>
-            <li><strong>Zona rilevata:</strong> point-in-polygon sui poligoni OMI ufficiali del Comune di Genova (EPSG:4326)</li>
-            <li><strong>IMU 2026 Genova:</strong> ordinaria 1,06% · canone concordato con inquilino residente –25% (DCC 57/2024 + DCC 41/2025)</li>
-            <li><strong>Cedolare secca:</strong> 21% libero mercato · 10% canone concordato/ERS · nessun aggiornamento ISTAT</li>
-            <li><strong>IRPEF ordinaria:</strong> base imponibile = canone × 95% · con IRPEF possibile aggiornamento +75% ISTAT/anno (non simulato)</li>
-            <li><strong>Canone ERS/moderato:</strong> stima –25% su concordato max · il valore reale dipende dalla convenzione specifica Comune/ARTE</li>
-            <li><strong>TARI:</strong> calcolata su {mq} mq, tariffa 1 componente (DCC 60/2024) · casa sfitta a carico proprietario · affittata a carico inquilino</li>
-            <li><strong>Quotazioni OMI:</strong> AdE 2° semestre 2025 · abitazioni civili stato normale · riferimento orientativo, non perizia</li>
-            <li><strong>Non inclusi:</strong> costi registrazione, spese legali, aggiornamento ISTAT con IRPEF, bonus ristrutturazione</li>
-          </ul>
-        </div>
-        <div className="print-header">
-          <div style={{fontFamily:"'Nunito',sans-serif",fontSize:"1.4rem",fontWeight:700,color:"#0f1e2e"}}>
-            Comparatore scenari di locazione — Genova
+          {/* NOTE */}
+          <div className="note">
+            <strong>Note metodologiche:</strong>
+            <ul>
+              <li><strong>Zona {zona}:</strong> fascia {fEur(zd?.min||0)}/mq/anno – {fEur(zd?.max||0)}/mq/anno · Allegato 2, Accordo Territoriale Genova 29/05/2025</li>
+              <li><strong>IMU 2026 Genova:</strong> ordinaria 1,06% · canone concordato con inquilino residente -25%</li>
+              <li><strong>Cedolare secca:</strong> 21% libero mercato · 10% canone concordato/ERS</li>
+              <li><strong>IRPEF ordinaria:</strong> base imponibile = canone × 95%</li>
+              <li><strong>TARI:</strong> calcolata su {mq} mq, tariffa 1 componente (DCC 60/2024)</li>
+              <li><strong>Non inclusi:</strong> costi registrazione, spese legali, aggiornamento ISTAT con IRPEF</li>
+            </ul>
           </div>
-          <div style={{fontSize:".85rem",color:"#666",marginTop:4}}>
-            Zona <strong>{zona}</strong>{OMI_DESC[zona]?` – ${OMI_DESC[zona]}`:""} · {mq} mq · Accordo Territoriale 29/05/2025
+
+          <div style={{display:"flex",gap:12,flexWrap:"wrap",marginTop:"2rem"}}>
+            <button className="btn-nav" onClick={reset}>🔄 Nuova simulazione</button>
+            <button className="btn-nav" onClick={()=>window.print()}>🖨️ Stampa / Salva PDF</button>
           </div>
-          <div style={{fontSize:".8rem",color:"#666",marginTop:2}}>
-            Regime fiscale: {fiscalTab==="ced"?"Cedolare secca":`IRPEF ${Math.round(IRPEF_SCAGLIONI[irpefScag].aliq*100)}% scaglione marginale`}
-          </div>
-        </div>
-        <div style={{display:"flex",gap:12,flexWrap:"wrap",marginTop:"1.5rem"}}>
-          <button className="btn btn-outline" onClick={reset}>🔄 Nuova simulazione</button>
-          <button className="btn btn-primary" onClick={()=>window.print()}>🖨️ Stampa / Salva PDF</button>
-        </div>
-      </>)}
+        </>)}
+
+      </div>
     </div>
   );
 }
 
 ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
-
 </script>
 </body>
 </html>
